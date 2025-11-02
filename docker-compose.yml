@@ -1,0 +1,28 @@
+name: markets
+
+services:
+    host:
+        build:
+          context: .
+          dockerfile: config/host/Dockerfile
+        depends_on: 
+            - db
+        volumes:
+            - ./root:/root
+            - ./datalake:/project/datalake
+            - ./config:/project/config
+    db:
+        image: postgres
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
+        ports:
+          - 5432:5432
+        volumes:
+            - db:/var/lib/postgresql/data
+            - ./root:/root
+            - ./datalake:/datalake
+
+volumes:
+    db:
