@@ -19,7 +19,7 @@ services:
         stdin_open: true
         tty: true
         command: bash -c "airflow standalone"
-        user: 50000:0
+        user: ${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-0}
     db:
         image: postgres
         environment:
