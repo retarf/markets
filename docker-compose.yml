@@ -1,16 +1,25 @@
 name: markets
 
 services:
-    host:
+    airflow:
         build:
           context: .
-          dockerfile: config/host/Dockerfile
+          dockerfile: dockerfile/airflow/Dockerfile
         depends_on: 
             - db
+        env_file:
+          - .env
         volumes:
             - ./root:/root
             - ./datalake:/project/datalake
-            - ./config:/project/config
+            - ./dockerfile:/project/dockerfile
+            - ./airflow:/project/airflow
+        ports:
+            - "8080:8080"
+        stdin_open: true
+        tty: true
+        command: bash -c "airflow standalone"
+        user: 50000:0
     db:
         image: postgres
         environment:
@@ -26,3 +35,4 @@ services:
 
 volumes:
     db:
+    airflow:
