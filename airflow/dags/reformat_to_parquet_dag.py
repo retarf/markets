@@ -1,8 +1,9 @@
-import os
 import logging
 from airflow.sdk import dag
 from airflow.providers.standard.operators.python import PythonOperator
 from pyarrow import csv, parquet
+
+from handlers.operations import get_ticker_from_file_name, get_file_list_generator
 
 
 INPUT_DIR = "/project/datalake"
@@ -15,14 +16,6 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
-def get_csv_file_generator():
-    return (file for file in os.listdir(INPUT_DIR) if file.split(".")[-1] == CSV_EXTENSION)
-
-
-def get_ticker_from_file_name(file_name):
-    return file_name.split(".")[0]
-
-
 def reformat_csv_to_parquet_operation(ticker, csv_file):
     table = csv.read_csv(f"{INPUT_DIR}/{csv_file}")
     output_path = f"{OUTPUT_DIR}/{ticker}.{PARQUET_EXTENSION}"
@@ -32,7 +25,7 @@ def reformat_csv_to_parquet_operation(ticker, csv_file):
 
 @dag()
 def reformat_csv_to_parquet_dag():
-    for csv_file in get_csv_file_generator():
+    for csv_file in get_file_list_generator(INPUT_DIR, CSV_EXTENSION):
         ticker = get_ticker_from_file_name(csv_file)
         PythonOperator(
             task_id=f"{ticker.upper()}_reformat_csv_to_parquet_operation",
