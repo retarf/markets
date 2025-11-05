@@ -1,3 +1,4 @@
+import os
 from airflow.sdk import dag
 from airflow.providers.standard.operators.python import PythonOperator
 
@@ -5,13 +6,14 @@ import requests
 import logging
 
 TICKER_LIST = ['xtb', "bbb", "orl", "ddd"]
-DATA_URL = "https://stooq.pl/q/d/l/?s={ticker}&i=d"
 DATA_DIR = "/project/datalake"
 
 NO_DATA_ROW = b"Brak danych"
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
+data_url = os.environ.get("DATA_SOURCE_URI")
 
 
 class ValidationError(ValueError):
@@ -24,7 +26,7 @@ def validate_data(ticker, data):
 
 
 def pull_data(ticker):
-    return requests.get(DATA_URL.format(ticker=ticker)).content
+    return requests.get(data_url.format(ticker=ticker)).content
 
 
 def save_data(ticker, data):
