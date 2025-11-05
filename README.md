@@ -119,21 +119,19 @@ AIRFLOW_GID=
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/<your_username>/markets.git
+   git clone https://github.com/retarf/markets.git
    cd markets
    ```
 
 2. Set up environment variables (e.g. in `.env` file or Airflow UI).
 
-3. Place Airflow DAGs in the `dags/` directory.
-
-4. Start Airflow:
+3. Start Airflow:
 
    ```bash
    docker-compose up -d
    ```
 
-5. Check DAGs in Airflow UI and trigger:
+4. Check DAGs in Airflow UI and trigger:
 
    * `pull_stock_data_dag`
    * `reformat_to_parquet_dag`
