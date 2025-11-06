@@ -5,7 +5,7 @@ from airflow.providers.standard.operators.python import PythonOperator
 import requests
 import logging
 
-TICKER_LIST = ['xtb', "bbb", "orl", "ddd"]
+TICKER_LIST = ['xtb', "orl"]
 DATA_DIR = "/project/datalake"
 
 NO_DATA_ROW = b"Brak danych"
@@ -42,7 +42,7 @@ def pull_stock_data_operation(ticker):
     save_data(ticker, data)
 
 
-@dag()
+@dag(dag_id="pull_stock_data_dag")
 def pull_stock_data_dag():
     for ticker in TICKER_LIST:
         PythonOperator(task_id=f"{ticker.upper()}_pull_stock_data_operation", python_callable=pull_stock_data_operation, op_kwargs={'ticker': ticker})

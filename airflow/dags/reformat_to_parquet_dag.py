@@ -23,7 +23,7 @@ def reformat_csv_to_parquet_operation(ticker, csv_file):
     logger.info(f"Wrote {csv_file} to {output_path}")
 
 
-@dag()
+@dag(dag_id="reformat_to_parquet_dag")
 def reformat_csv_to_parquet_dag():
     for csv_file in get_file_list_generator(INPUT_DIR, CSV_EXTENSION):
         ticker = get_ticker_from_file_name(csv_file)

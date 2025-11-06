@@ -45,7 +45,7 @@ def load_parquet_to_database_operation(ticker, parquet_file):
     write_dataframe_to_database(ticker, dataframe)
 
 
-@dag()
+@dag(dag_id="load_parquet_to_database_dag")
 def load_parquet_to_database_dag():
     for parquet_file in get_file_list_generator(INPUT_DIR, PARQUET_EXTENSION):
         ticker = get_ticker_from_file_name(parquet_file)
