@@ -121,9 +121,13 @@ AIRFLOW_GID=
    ```bash
    git clone https://github.com/retarf/markets.git
    cd markets
+   mkdir datalake
    ```
 
-2. Set up environment variables (e.g. in `.env` file or Airflow UI).
+2. Set up environment variables in the `.env` file using .env.example.
+   ```bash
+   cp .env.example .env
+   ```
 
 3. Start Airflow:
 
@@ -133,6 +137,7 @@ AIRFLOW_GID=
 
 4. Check DAGs in Airflow UI and trigger:
 
+   * `master_load_data_dag`
    * `pull_stock_data_dag`
    * `reformat_to_parquet_dag`
    * `load_parquet_to_database_dag`
