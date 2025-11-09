@@ -4,7 +4,7 @@ import polars as pl
 from airflow.sdk import dag
 from airflow.providers.standard.operators.python import PythonOperator
 
-from handlers.operations import get_ticker_from_file_name, get_file_list_generator
+from handlers.operations import get_ticker_from_file_name, get_file_list
 
 
 INPUT_DIR = "/project/datalake"
@@ -18,6 +18,10 @@ DB_ENGINE = 'postgresql'
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
+
+
+parquet_file_list = get_file_list(INPUT_DIR, PARQUET_EXTENSION)
 
 
 def read_parquet_to_dataframe(parquet_file_path):
@@ -47,7 +51,7 @@ def load_parquet_to_database_operation(ticker, parquet_file):
 
 @dag(dag_id="load_parquet_to_database_dag")
 def load_parquet_to_database_dag():
-    for parquet_file in get_file_list_generator(INPUT_DIR, PARQUET_EXTENSION):
+    for parquet_file in parquet_file_list:
         ticker = get_ticker_from_file_name(parquet_file)
         PythonOperator(
             task_id=f"{ticker.upper()}_load_parquet_to_database_operation",
