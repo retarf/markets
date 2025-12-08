@@ -14,8 +14,10 @@ services:
             - ./datalake:/project/datalake
             - ./dockerfile:/project/dockerfile
             - ./airflow:/project/airflow
+            - ./snowflake:/project/snowflake
         ports:
             - "8080:8080"
+            - "7070:7070"
         stdin_open: true
         tty: true
         command: bash -c "airflow standalone"
