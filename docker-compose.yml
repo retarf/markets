@@ -12,6 +12,7 @@ services:
         volumes:
             - ./root:/root
             - ./datalake:/project/datalake
+            - ./s3:/project/s3
             - ./dockerfile:/project/dockerfile
             - ./airflow:/project/airflow
             - ./snowflake:/project/snowflake
