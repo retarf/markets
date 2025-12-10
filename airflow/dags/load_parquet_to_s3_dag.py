@@ -35,7 +35,7 @@ def limit_number_of_rows(dataframe, number_of_rows):
 
 def write_dataframe_to_parquet(ticker, dataframe):
     path = os.path.join(f"{S3_DIR}", f"{ticker}.{PARQUET_EXTENSION}")
-    dataframe.write_parquet(path)
+    dataframe.write_parquet(file=path, compression='uncompressed')
     logger.info(f"Successfully wrote parquet to {path}.")
 
 
