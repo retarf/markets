@@ -15,6 +15,9 @@ services:
             - ./dockerfile:/project/dockerfile
             - ./airflow:/project/airflow
             - ./snowflake:/project/snowflake
+            - ./user/.bashrc:/home/airflow/.bashrc
+            - ./user/.ipython:/home/airflow/.ipython
+            - ./airbnb:/project/airbnb
         ports:
             - "8080:8080"
             - "7070:7070"

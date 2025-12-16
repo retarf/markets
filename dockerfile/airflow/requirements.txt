@@ -49,6 +49,8 @@ click==8.3.0
     #   dbt-core
     #   dbt-semantic-interfaces
     #   pip-tools
+cloudpickle==3.1.1
+    # via snowflake-snowpark-python
 colorama==0.4.6
     # via dbt-common
 cryptography==46.0.0
@@ -156,12 +158,18 @@ msgpack==1.1.2
     # via mashumaro
 networkx==3.5
     # via dbt-core
+numpy==2.3.5
+    # via pandas
 orderly-set==5.5.0
     # via deepdiff
 packaging==25.0
     # via
     #   build
     #   dbt-core
+    #   snowflake-connector-python
+pandas==2.3.3
+    # via
+    #   -r requirements.in
     #   snowflake-connector-python
 parsedatetime==2.6
     # via agate
@@ -183,18 +191,21 @@ polars-runtime-32==1.35.1
     # via polars
 prompt-toolkit==3.0.52
     # via ipython
-protobuf==6.33.0
+protobuf==6.31.1
     # via
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
     #   dbt-protos
+    #   snowflake-snowpark-python
 ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.3
     # via stack-data
 pyarrow==22.0.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   snowflake-connector-python
 pycparser==2.23
     # via cffi
 pydantic==2.12.4
@@ -218,6 +229,8 @@ python-dateutil==2.9.0.post0
     #   botocore
     #   dbt-common
     #   dbt-semantic-interfaces
+    #   pandas
+    #   snowflake-snowpark-python
 python-slugify==8.0.4
     # via agate
 pytimeparse==1.1.8
@@ -226,11 +239,13 @@ pytz==2025.2
     # via
     #   dbt-adapters
     #   dbt-core
+    #   pandas
     #   snowflake-connector-python
 pyyaml==6.0.3
     # via
     #   dbt-core
     #   dbt-semantic-interfaces
+    #   snowflake-snowpark-python
 referencing==0.37.0
     # via
     #   jsonschema
@@ -254,8 +269,12 @@ six==1.17.0
     # via
     #   isodate
     #   python-dateutil
-snowflake-connector-python[secure-local-storage]==3.18.0
-    # via dbt-snowflake
+snowflake-connector-python[pandas,secure-local-storage]==3.18.0
+    # via
+    #   dbt-snowflake
+    #   snowflake-snowpark-python
+snowflake-snowpark-python[pandas]==1.43.0
+    # via -r requirements.in
 snowplow-tracker==1.1.0
     # via dbt-core
 sortedcontainers==2.4.0
@@ -282,10 +301,15 @@ typing-extensions==4.15.0
     #   pydantic
     #   pydantic-core
     #   snowflake-connector-python
+    #   snowflake-snowpark-python
     #   snowplow-tracker
     #   typing-inspection
 typing-inspection==0.4.2
     # via pydantic
+tzdata==2025.3
+    # via pandas
+tzlocal==5.3.1
+    # via snowflake-snowpark-python
 urllib3==2.5.0
     # via
     #   botocore
@@ -293,7 +317,9 @@ urllib3==2.5.0
 wcwidth==0.2.14
     # via prompt-toolkit
 wheel==0.45.1
-    # via pip-tools
+    # via
+    #   pip-tools
+    #   snowflake-snowpark-python
 zipp==3.23.0
     # via importlib-metadata
 

@@ -1,6 +1,8 @@
 .env
 .idea
 root
+user
 datalake
 .python-version
 snowflake
+airbnb
