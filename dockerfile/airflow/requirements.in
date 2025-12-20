@@ -7,3 +7,6 @@ polars==1.35.1
 dbt-snowflake==1.10.3
 snowflake-snowpark-python[pandas]==1.43.0
 pandas==2.3.3
+pyspark==4.1.0
+alembic==1.17.2
+snowflake-sqlalchemy==1.8.2

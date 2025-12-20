@@ -4,6 +4,7 @@ ENV     PYTHONDONTWRITEBYTECODE 1
 
 USER    0:0
 RUN     apt update && apt install -y pgcli vim
+RUN     apt install -y openjdk-17-jdk
 
 FROM stage1
 USER    50000:0

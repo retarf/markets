@@ -1,12 +1,16 @@
 import os
-from airflow.sdk import dag
-from airflow.providers.standard.operators.python import PythonOperator
 
 import requests
 import logging
 
+from airflow.sdk import dag
+from airflow.providers.standard.operators.python import PythonOperator
+
+from handlers import get_current_file_name
+from constants import NEW_DATA_DIR
+
+
 TICKER_LIST = ['xtb', "orl"]
-DATA_DIR = "/project/datalake"
 
 NO_DATA_ROW = b"Brak danych"
 
@@ -30,7 +34,7 @@ def pull_data(ticker):
 
 
 def save_data(ticker, data):
-    with open(f"{DATA_DIR}/{ticker}.csv", 'wb+') as f:
+    with open(os.path.join(NEW_DATA_DIR, get_current_file_name(ticker)), 'wb+') as f:
         f.write(data)
 
     logger.info(f"Data has been downloaded for the ticker {ticker.upper()}.")

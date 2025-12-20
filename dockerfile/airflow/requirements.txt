@@ -10,6 +10,8 @@ agate==1.9.1
     #   dbt-common
     #   dbt-core
     #   dbt-snowflake
+alembic==1.17.2
+    # via -r requirements.in
 annotated-types==0.7.0
     # via pydantic
 asn1crypto==1.5.1
@@ -92,6 +94,8 @@ executing==2.2.1
     # via stack-data
 filelock==3.20.0
     # via snowflake-connector-python
+greenlet==3.3.0
+    # via sqlalchemy
 idna==3.11
     # via
     #   requests
@@ -140,8 +144,12 @@ keyring==25.6.0
     # via snowflake-connector-python
 leather==0.4.0
     # via agate
+mako==1.3.10
+    # via alembic
 markupsafe==3.0.3
-    # via jinja2
+    # via
+    #   jinja2
+    #   mako
 mashumaro[msgpack]==3.14
     # via
     #   dbt-adapters
@@ -202,6 +210,8 @@ ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.3
     # via stack-data
+py4j==0.10.9.9
+    # via pyspark
 pyarrow==22.0.0
     # via
     #   -r requirements.in
@@ -224,6 +234,8 @@ pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
+pyspark==4.1.0
+    # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via
     #   botocore
@@ -273,12 +285,19 @@ snowflake-connector-python[pandas,secure-local-storage]==3.18.0
     # via
     #   dbt-snowflake
     #   snowflake-snowpark-python
+    #   snowflake-sqlalchemy
 snowflake-snowpark-python[pandas]==1.43.0
+    # via -r requirements.in
+snowflake-sqlalchemy==1.8.2
     # via -r requirements.in
 snowplow-tracker==1.1.0
     # via dbt-core
 sortedcontainers==2.4.0
     # via snowflake-connector-python
+sqlalchemy==2.0.45
+    # via
+    #   alembic
+    #   snowflake-sqlalchemy
 sqlparse==0.5.3
     # via dbt-core
 stack-data==0.6.3
@@ -293,6 +312,7 @@ traitlets==5.14.3
     #   matplotlib-inline
 typing-extensions==4.15.0
     # via
+    #   alembic
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
@@ -303,6 +323,7 @@ typing-extensions==4.15.0
     #   snowflake-connector-python
     #   snowflake-snowpark-python
     #   snowplow-tracker
+    #   sqlalchemy
     #   typing-inspection
 typing-inspection==0.4.2
     # via pydantic
