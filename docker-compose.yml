@@ -15,7 +15,7 @@ services:
             - ./migrations:/project/migrations
             - ./dockerfile:/project/dockerfile
             - ./airflow:/project/airflow
-            - ./snowflake:/project/snowflake
+            - ./dbt:/project/dbt
             - ./user/.bashrc:/home/airflow/.bashrc
             - ./user/.ipython:/home/airflow/.ipython
             - ./airbnb:/project/airbnb

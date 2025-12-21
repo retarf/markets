@@ -16,7 +16,7 @@ from constants import CSV, NEW_DATA_DIR, UPLOADED_DATA_DIR
 
 PARQUET_EXTENSION = "parquet"
 RAW_SCHEMA="RAW"
-DATA_TABLE = "DATA"
+DATA_TABLE = "RAW_STOCK_DATA"
 DATE = "DATE"
 OPEN = "OPEN"
 HIGH = "HIGH"
@@ -100,8 +100,10 @@ def write_csv_to_snowflake(csv_file):
 
 def load_csv_to_snowflake_operation():
     new_csv_file_list = get_file_list(NEW_DATA_DIR, CSV)
+    logger.info(f"Found {len(new_csv_file_list)} new csv files: {new_csv_file_list}")
     uploaded_csv_file_list = get_file_list(UPLOADED_DATA_DIR, CSV)
-    csv_file_list = set(new_csv_file_list).symmetric_difference(uploaded_csv_file_list)
+    csv_file_list = set(new_csv_file_list).difference(uploaded_csv_file_list)
+    logger.info(f"Writing {len(csv_file_list)} new csv files: {csv_file_list}")
     for csv_file in csv_file_list:
         write_csv_to_snowflake(csv_file)
 
