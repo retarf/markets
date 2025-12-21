@@ -1,0 +1,5 @@
+.credentials
+logs
+target
+packages
+*.bak

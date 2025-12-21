@@ -1,0 +1,16 @@
+markets:
+  outputs:
+    dev:
+      type: snowflake
+      account: xxx
+      user: dbt
+
+      role: TRANSFORM
+      private_key_path: '/project/dbt/.credentials/rsa_key.p8'
+      private_key_passphrase: xxx
+
+      database: MARKETS
+      schema: DEV
+      threads: 1
+      warehouse: COMPUTE_WH
+  target: dev
