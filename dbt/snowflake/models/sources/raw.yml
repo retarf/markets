@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: raw
+    database: MARKETS
+    schema: RAW
+
+    tables:
+      - name: raw_stock_data
+        description: >
+          Raw daily stock prices ingested from market API.
+          Append-only table. One row per ticker, date, and load event.
+
+        columns:
+          - name: ticker
+            description: Stock ticker symbol
+
+          - name: trading_date
+            description: Trading date
+
+          - name: open
+            description: Opening price
+
+          - name: high
+            description: Highest price of the day
+
+          - name: low
+            description: Lowest price of the day
+
+          - name: close
+            description: Closing price
+
+          - name: volume
+            description: Traded volume
+
+          - name: source_file
+            description: Source file or batch identifier
+
+          - name: load_ts
+            description: Timestamp when the record was loaded

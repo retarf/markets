@@ -18,7 +18,7 @@ class RAW_COLUMN:
 
 
 class COLUMN:
-    DATE = "DATE"
+    DATE = "TRADING_DATE"
     OPEN = "OPEN"
     HIGH = "HIGH"
     LOW = "LOW"

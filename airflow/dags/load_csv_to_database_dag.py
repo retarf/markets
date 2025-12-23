@@ -51,7 +51,7 @@ def get_latest_csv_file_list():
 def rename_column_names(df):
     return df.rename(
         {
-            RAW_COLUMN.DATE: "date",
+            RAW_COLUMN.DATE: "trading_date",
             RAW_COLUMN.OPEN: "open",
             RAW_COLUMN.HIGH: "high",
             RAW_COLUMN.LOW: "low",
