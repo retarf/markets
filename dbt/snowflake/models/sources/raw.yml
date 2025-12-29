@@ -4,6 +4,10 @@ sources:
   - name: raw
     database: MARKETS
     schema: RAW
+    config:
+      freshness:
+        warn_after: {count: 24, period: hour}
+      loaded_at_field: load_ts
 
     tables:
       - name: raw_stock_data
@@ -14,27 +18,45 @@ sources:
         columns:
           - name: ticker
             description: Stock ticker symbol
+            data_tests:
+              - not_null
 
           - name: trading_date
             description: Trading date
+            data_tests:
+              - not_null
 
           - name: open
             description: Opening price
+            data_tests:
+              - not_null
 
           - name: high
             description: Highest price of the day
+            data_tests:
+              - not_null
 
           - name: low
             description: Lowest price of the day
+            data_tests:
+              - not_null
 
           - name: close
             description: Closing price
+            data_tests:
+              - not_null
 
           - name: volume
             description: Traded volume
+            data_tests:
+              - not_null
 
           - name: source_file
             description: Source file or batch identifier
+            data_tests:
+              - not_null
 
           - name: load_ts
             description: Timestamp when the record was loaded
+            data_tests:
+              - not_null
