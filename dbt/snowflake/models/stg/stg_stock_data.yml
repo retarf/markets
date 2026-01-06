@@ -37,6 +37,7 @@ models:
               - ticker
               - trading_date
 
+
 unit_tests:
   - name: test_check_deduplication
     description: "test is checking if there is no duplicated rows with (ticker, trading_date) primary key after deduplication process."

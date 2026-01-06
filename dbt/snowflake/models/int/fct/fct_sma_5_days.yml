@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: fct_sma_5_days.yml
+    columns:
+      - name: ticker
+        data_tests:
+          - not_null
+      - name: trading_date
+        data_tests:
+          - not_null
+
+
+unit_tests:
+  - name: test_check_sma_5
+    description: "test is checking if the sma is calculated correctly."
+    model: fct_sma_5_days
+    given:
+      - input: ref('stg_stock_data')
+        rows:
+          - {ticker: test, trading_date: 2020-01-01, close: 1.00}
+          - {ticker: test, trading_date: 2020-01-02, close: 1.00}
+          - {ticker: test, trading_date: 2020-01-03, close: 1.00}
+          - {ticker: test, trading_date: 2020-01-04, close: 2.00}
+          - {ticker: test, trading_date: 2020-01-05, close: 5.00}
+          - {ticker: test, trading_date: 2020-01-05, close: 6.00}
+    expect:
+      rows:
+        - {ticker: test, trading_date: 2020-01-01, close: 1.00, sma: 1.00}
+        - {ticker: test, trading_date: 2020-01-02, close: 1.00, sma: 1.00}
+        - {ticker: test, trading_date: 2020-01-03, close: 1.00, sma: 1.00}
+        - {ticker: test, trading_date: 2020-01-04, close: 2.00, sma: 1.25}
+        - {ticker: test, trading_date: 2020-01-05, close: 5.00, sma: 2.00}
+        - {ticker: test, trading_date: 2020-01-05, close: 6.00, sma: 3.00}
