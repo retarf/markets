@@ -59,3 +59,27 @@ unit_tests:
         - {ticker: test, trading_date: 2020-01-04, last_close: 1.00}
         - {ticker: test, trading_date: 2020-01-05, last_close: 2.00}
         - {ticker: test, trading_date: 2020-01-06, last_close: 5.00}
+
+  - name: test_check_last_sma
+    description: "test is checking if the last sma is correct."
+    model: fct_sma_5_days
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('stg_stock_data')
+        rows:
+          - {ticker: test, trading_date: 2020-01-01, close: 1.00}
+          - {ticker: test, trading_date: 2020-01-02, close: 1.00}
+          - {ticker: test, trading_date: 2020-01-03, close: 1.00}
+          - {ticker: test, trading_date: 2020-01-04, close: 2.00}
+          - {ticker: test, trading_date: 2020-01-05, close: 5.00}
+          - {ticker: test, trading_date: 2020-01-06, close: 6.00}
+    expect:
+      rows:
+        - {ticker: test, trading_date: 2020-01-01, last_sma: null}
+        - {ticker: test, trading_date: 2020-01-02, last_sma: 1.00}
+        - {ticker: test, trading_date: 2020-01-03, last_sma: 1.00}
+        - {ticker: test, trading_date: 2020-01-04, last_sma: 1.00}
+        - {ticker: test, trading_date: 2020-01-05, last_sma: 1.25}
+        - {ticker: test, trading_date: 2020-01-06, last_sma: 2.00}
