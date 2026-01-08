@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fct_sma_5_days.yml
+  - name: fct_sma.yml
     columns:
       - name: ticker
         data_tests:
@@ -14,7 +14,7 @@ models:
 unit_tests:
   - name: test_check_sma_5
     description: "test is checking if the sma is calculated correctly."
-    model: fct_sma_5_days
+    model: fct_sma
     overrides:
       macros:
         is_incremental: false
@@ -38,7 +38,7 @@ unit_tests:
 
   - name: test_check_last_value
     description: "test is checking if the last close is correct."
-    model: fct_sma_5_days
+    model: fct_sma
     overrides:
       macros:
         is_incremental: false
@@ -62,7 +62,7 @@ unit_tests:
 
   - name: test_check_last_sma
     description: "test is checking if the last sma is correct."
-    model: fct_sma_5_days
+    model: fct_sma
     overrides:
       macros:
         is_incremental: false
