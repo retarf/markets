@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: fct_trend
+    columns:
+      - name: ticker
+        data_tests:
+          - not_null
+      - name: trading_date
+        data_tests:
+          - not_null
+      - name: trend_sma_5
+        data_tests:
+          - accepted_values:
+              name: sma_5_accepted_values
+              arguments:
+                values: ['trend_up', 'trend_down', 'signal_up', 'signal_down']
+      - name: trend_sma_10
+        data_tests:
+          - accepted_values:
+              name: sma_10_accepted_values
+              arguments:
+                values: ['trend_up', 'trend_down', 'signal_up', 'signal_down']
+      - name: trend_sma_20
+        data_tests:
+          - accepted_values:
+              name: sma_20_accepted_values
+              arguments:
+                values: ['trend_up', 'trend_down', 'signal_up', 'signal_down']
+
+
+unit_tests:
+  - name: test_check_sma_5_signal_down
+    description: "test is checking if the sma signal is calculated correctly."
+    model: fct_trend
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('fct_sma')
+        rows:
+          - {ticker: test, trading_date: 2020-01-01, close: 1.00, last_close: 2.00, last_sma_5: 1.00, sma_5: 1.50, sma_10: 2.00}
+    expect:
+      rows:
+        - {ticker: test, trading_date: 2020-01-01, trend_sma_5: 'signal_down'}
+
+  - name: test_check_sma_5_signal_up
+    description: "test is checking if the sma signal is calculated correctly."
+    model: fct_trend
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('fct_sma')
+        rows:
+          - {ticker: test, trading_date: 2020-01-01, close: 2.00, last_close: 1.00, last_sma_5: 1.50, sma_5: 1.00, sma_10: 2.00}
+    expect:
+      rows:
+        - {ticker: test, trading_date: 2020-01-01, trend_sma_5: 'signal_up'}

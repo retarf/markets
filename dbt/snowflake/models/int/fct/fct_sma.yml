@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fct_sma.yml
+  - name: fct_sma
     columns:
       - name: ticker
         data_tests:
@@ -9,6 +9,13 @@ models:
       - name: trading_date
         data_tests:
           - not_null
+      - name: close
+      - name: sma_5
+      - name: sma_10
+      - name: sma_20
+      - name: last_sma_5
+      - name: last_sma_10
+      - name: last_sma_20
 
 
 unit_tests:

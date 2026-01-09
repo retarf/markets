@@ -19,6 +19,8 @@ select
     ticker,
     close,
     sma_5,
+    sma_10,
+    sma_20,
     LAG(close) over (partition by ticker order by trading_date) as last_close,
     LAG(sma_5) over (partition by ticker order by trading_date) as last_sma_5,
     LAG(sma_10) over (partition by ticker order by trading_date) as last_sma_10,
