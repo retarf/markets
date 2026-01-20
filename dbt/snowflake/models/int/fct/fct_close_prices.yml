@@ -1,0 +1,16 @@
+version: 2
+  
+  {{'set values}}
+
+models:
+  - name: fct_close_prices
+    columns:
+      - name: ticker
+        data_tests:
+          - not_null
+      - name: trading_date
+        data_tests:
+          - not_null
+      - name: close
+        data_tests:
+          - not_null

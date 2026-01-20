@@ -3,7 +3,7 @@
     unique_key=['ticker', 'trading_date'],
     incremental_strategy='merge'
 ) }}
-with close_data as (select trading_date, ticker, close from {{ ref('stg_stock_data') }}),
+with close_data as (select * from {{ ref('fct_close_prices') }}),
 calculations as (
     select
         trading_date,

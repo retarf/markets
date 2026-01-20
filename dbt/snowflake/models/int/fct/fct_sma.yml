@@ -26,7 +26,7 @@ unit_tests:
       macros:
         is_incremental: false
     given:
-      - input: ref('stg_stock_data')
+      - input: ref('fct_close_prices')
         rows:
           - {ticker: test, trading_date: 2020-01-01, close: 1.00}
           - {ticker: test, trading_date: 2020-01-02, close: 1.00}
@@ -50,7 +50,7 @@ unit_tests:
       macros:
         is_incremental: false
     given:
-      - input: ref('stg_stock_data')
+      - input: ref('fct_close_prices')
         rows:
           - {ticker: test, trading_date: 2020-01-01, close: 1.00}
           - {ticker: test, trading_date: 2020-01-02, close: 1.00}
@@ -74,7 +74,7 @@ unit_tests:
       macros:
         is_incremental: false
     given:
-      - input: ref('stg_stock_data')
+      - input: ref('fct_close_prices')
         rows:
           - {ticker: test, trading_date: 2020-01-01, close: 1.00}
           - {ticker: test, trading_date: 2020-01-02, close: 1.00}
