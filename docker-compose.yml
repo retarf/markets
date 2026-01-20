@@ -16,6 +16,8 @@ services:
             - ./dockerfile:/project/dockerfile
             - ./airflow:/project/airflow
             - ./dbt:/project/dbt
+            - ./pyspark:/project/pyspark
+            - ./pandas:/project/pandas
             - ./user/.bashrc:/home/airflow/.bashrc
             - ./user/.ipython:/home/airflow/.ipython
             - ./airbnb:/project/airbnb
