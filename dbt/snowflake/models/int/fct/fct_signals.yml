@@ -3,7 +3,7 @@ version: 2
   {{'set values}}
 
 models:
-  - name: fct_trend
+  - name: fct_signals
     columns:
       - name: ticker
         data_tests:
@@ -11,28 +11,34 @@ models:
       - name: trading_date
         data_tests:
           - not_null
-      - name: trend_sma_5
+      - name: signal_sma_5
         data_tests:
           - accepted_values:
-              name: sma_5_accepted_values
+              name: signal_sma_5_accepted_values
               arguments:
-                values: "{{ var('valid_trend') }}"
-      - name: trend_sma_10
+                values: "{{ var('valid_signals') }}"
+      - name: signal_sma_10
         data_tests:
           - accepted_values:
-              name: sma_10_accepted_values
+              name: signal_sma_10_accepted_values
               arguments:
-                values: "{{ var('valid_trend') }}"
-      - name: trend_sma_20
+                values: "{{ var('valid_signals') }}"
+      - name: signal_sma_20
         data_tests:
           - accepted_values:
-              name: sma_20_accepted_values
+              name: signal_sma_20_accepted_values
               arguments:
-                values: "{{ var('valid_trend') }}"
+                values: "{{ var('valid_signals') }}"
+      - name: signal
+        data_tests:
+          - accepted_values:
+              name: signal_accepted_values
+              arguments:
+                values: "{{ var('valid_signals') }}"
 
 
 unit_tests:
-  - name: test_check_sma_5_trend_down
+  - name: test_check_sma_5_signal_down
     description: "test is checking if the sma signal is calculated correctly."
     model: fct_trend
     overrides:
@@ -46,7 +52,7 @@ unit_tests:
       rows:
         - {ticker: test, trading_date: 2020-01-01, trend_sma_5: 'down'}
 
-  - name: test_check_sma_5_trend_up
+  - name: test_check_sma_5_signal_up
     description: "test is checking if the sma signal is calculated correctly."
     model: fct_trend
     overrides:
