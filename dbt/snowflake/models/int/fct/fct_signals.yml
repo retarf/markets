@@ -1,7 +1,5 @@
 version: 2
   
-  {{'set values}}
-
 models:
   - name: fct_signals
     columns:

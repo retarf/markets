@@ -29,6 +29,12 @@ models:
               name: sma_20_accepted_values
               arguments:
                 values: "{{ var('valid_trend') }}"
+      - name: trend
+        data_tests:
+          - accepted_values:
+              name: trend_accepted_values
+              arguments:
+                values: "{{ var('valid_trend') }}"
 
 
 unit_tests:
