@@ -1,190 +1,195 @@
-# markets
-
-# Financial Market Data Pipeline (Airflow + PostgreSQL + Parquet)
-
-This project is an end-to-end data pipeline built with **Apache Airflow**, designed to collect, transform, and load financial market data into a PostgreSQL database.  
-It uses public data from **source** and modern Python data processing tools such as **Polars** and **PyArrow**.
-
----
+# 📊 Markets — Data Engineering & Analytics Project
 
 ## Overview
 
-The pipeline automates the full ETL flow:
+**Markets** is a data engineering and analytics project focused on researching historical returns of a **simple trading strategy based on three Simple Moving Averages (SMA)**.
 
-1. **Pull stock data** – downloads daily market data (CSV) for selected tickers from financial data website.).
-2. **Reformat to Parquet** – converts raw CSV files to columnar Parquet format for efficient storage and further processing.
-3. **Load to Database** – loads Parquet data into PostgreSQL tables (one per ticker symbol).
+The project demonstrates an end-to-end data pipeline built with **modern data engineering and analytics engineering practices**, including:
+- batch data ingestion,
+- warehouse-centric transformations,
+- workflow orchestration,
+- and signal generation for financial time-series data.
 
----
-
-## ⚙️ Architecture
-
-```text
-          +--------------------+
-          |   Source API (CSV)  |
-          +---------+----------+
-                    |
-                    v
-        +-----------+------------------+
-        | pull_stock_data_dag          |
-        |  (API -> requests -> CSV)    |
-        +------------------+-----------+
-                    |
-                    v
-        +-----------+-------------------+
-        | reformat_to_parquet_dag       |
-        |  (CSV -> PyArrow -> Parquet)  |
-        +-----------+-------------------+
-                    |
-                    v
-        +-----------+--------------------------+
-        | load_parquet_to_database_dag         |
-        |  (Parquet -> Polars -> PostgreSQL)   |
-        +--------------------------------------+
-````
+The project is intentionally designed as a **demo / portfolio project**.  
+It focuses on **data pipelines, transformations, and analytical logic**, not on real-time trading or production execution.
 
 ---
 
-## Technologies Used
+## Project Goals
 
-| Category               | Tools                                                  |
-| ---------------------- | ------------------------------------------------------ |
-| Workflow Orchestration | Apache Airflow                                         |
-| Data Processing        | Python, Polars, PyArrow                                |
-| Storage                | Parquet                                                |
-| Database               | PostgreSQL                                             |
-| HTTP Client            | requests                                               |
-| Infrastructure         | Docker (optional), environment variables for DB config |
+- Demonstrate **data engineering best practices**
+- Build a reproducible, layered data model for market data
+- Generate trading signals based on **three SMA indicators**
+- Orchestrate batch workflows using **Apache Airflow**
+- Prepare a foundation for further **strategy return analysis**
 
 ---
 
-## DAGs Description
+## Scope and Limitations
 
-### `pull_stock_data_dag.py`
+### In scope (current state)
+- Batch ingestion of market data as CSV files
+- Workflow orchestration with Apache Airflow
+- Data transformations using dbt
+- Snowflake as the analytical warehouse
+- Technical indicators (SMA), trends, and signals
 
-Downloads CSV files with daily stock prices from source website for a list of tickers.
-Each ticker runs as a separate Airflow task.
+### Out of scope (current state)
+- Real-time / streaming ingestion
+- Trade execution
+- Predictive modeling or alpha generation
+- API layer or frontend
 
-**Key modules:**
-
-* `requests` for fetching data
-* simple validation to skip empty tickers
-
-**Example output:**
-`/project/datalake/xtb.csv`
-
----
-
-### `reformat_to_parquet_dag.py`
-
-Converts CSV files into Parquet format for optimized analytical storage.
-
-**Key modules:**
-
-* `pyarrow.csv`
-* `pyarrow.parquet`
-
-**Example output:**
-`/project/datalake/xtb.parquet`
+### Planned extensions
+- Strategy return analysis using **pandas** and **PySpark**
+- API layer for querying results
+- Simple React-based frontend for visualization
 
 ---
 
-### `load_parquet_to_database_dag.py`
+## Data Source
 
-Loads Parquet data into PostgreSQL database tables using Polars.
-
-**Key modules:**
-
-* `polars`
-* `write_database()` for efficient bulk inserts
-
-**Environment variables required:**
-
-```bash
-DATA_SOURCE_URI=
-DB_PASSWORD=
-DB_NAME=
-DB_USER=
-DB_HOST=db
-DB_PORT=5432
-AIRFLOW_HOME=/project/airflow
-AIRFLOW_UID=
-AIRFLOW_GID=
-```
+- Input data is provided as **CSV files**
+- CSV files are downloaded via an external API
+- The data provider is intentionally **abstracted and not included** due to licensing and non-commercial usage restrictions
+- The project focuses on **data processing and analytics**, not vendor-specific ingestion logic
 
 ---
 
-## How to Run Locally
+## Input Data Format
 
-1. Clone the repository:
+The pipeline expects market data in **CSV format** with a consistent schema.
 
-   ```bash
-   git clone https://github.com/retarf/markets.git
-   cd markets
-   mkdir datalake
-   ```
+### Expected CSV Structure
 
-2. Set up environment variables in the `.env` file using .env.example.
-   ```bash
-   cp .env.example .env
-   ```
+| Column name     | Type    | Description |
+|-----------------|---------|-------------|
+| `trading_date`  | DATE    | Trading date |
+| `ticker`        | STRING  | Market symbol (e.g. AAPL, MSFT) |
+| `open`          | NUMERIC | Opening price |
+| `high`          | NUMERIC | Highest price |
+| `low`           | NUMERIC | Lowest price |
+| `close`         | NUMERIC | Closing price |
+| `volume`        | NUMERIC | Trading volume |
 
-3. Start Airflow:
+### Assumptions
 
-   ```bash
-   docker-compose up -d
-   ```
+- Dates are in **ISO format (`YYYY-MM-DD`)**
+- Prices are assumed to be **adjusted prices**
+- Data is historical and append-only
+- Data quality checks (nulls, duplicates, ordering) are handled in dbt staging models
 
-4. Check DAGs in Airflow UI and trigger:
-
-   * `master_load_data_dag`
-   * `pull_stock_data_dag`
-   * `reformat_to_parquet_dag`
-   * `load_parquet_to_database_dag`
+The CSV schema is treated as a **data contract**, enforced during transformations.
 
 ---
 
-## Learning Goals
+## Architecture Overview
 
-This project demonstrates:
-
-* building a complete **data ingestion → transformation → loading** workflow,
-* orchestrating tasks with **Airflow DAGs**,
-* working with **columnar data (Parquet)**,
-* using **Polars and PyArrow** for high-performance ETL,
-* storing and managing data in **PostgreSQL**.
-
----
-
-## Possible Improvements
-
-To make this project even more impressive and valuable on the job market:
-
-| Area              | Suggestion                                                                           |
-| ----------------- | ------------------------------------------------------------------------------------ |
-| **Monitoring**    | Add Airflow task logging and retry logic. Integrate with Prometheus or Slack alerts. |
-| **Data Quality**  | Implement data validation (e.g. Great Expectations or custom checks in Polars).      |
-| **Storage Layer** | Add S3 (or MinIO locally) as a data lake layer.                                      |
-| **Metadata**      | Store ETL run metadata (execution date, data range, row count).                      |
-| **Automation**    | Add scheduling (daily runs) and notifications for failures.                          |
-| **Analytics**     | Build a small Streamlit / Grafana dashboard to visualize price trends.               |
-| **Testing**       | Include unit tests for each operation (`pytest` + mock data).                        |
-| **CI/CD**         | Use GitHub Actions to lint, test, and deploy DAGs automatically.                     |
-
----
-
-## Example Use Cases
-
-* Tracking daily financial instrument data (stocks, indices, FX).
-* Demonstrating end-to-end ETL orchestration in a **data engineer portfolio**.
-* Integrating with AWS (S3, RDS) or GCP (BigQuery) for cloud-based data pipelines.
-
----
-
-##  Author
-
-**Łukasz Długajczyk**
-Python Developer | Data Engineering Enthusiast
-[LinkedIn Profile](https://www.linkedin.com/in/lukaszdlugajczyk/) | [GitHub Profile](https://github.com/retarf)
+The project follows a **batch-oriented, warehouse-first architecture**:
 
 ```
+External API
+   ↓
+CSV files
+   ↓
+Apache Airflow (orchestration)
+   ↓
+Snowflake (raw data)
+   ↓
+dbt staging models
+   ↓
+dbt fact models
+   ↓
+dbt marts / signals
+```
+
+All analytical and business logic is implemented as **SQL models in dbt**, ensuring:
+- reproducibility,
+- testability,
+- transparency of transformations.
+
+---
+
+## Workflow Orchestration (Apache Airflow)
+
+Apache Airflow is used to orchestrate the data pipeline.
+
+Airflow responsibilities include:
+- scheduling pipeline runs,
+- managing task dependencies,
+- coordinating ingestion and transformation steps.
+
+Typical workflow:
+1. Download market data and store it as CSV
+2. Load raw CSV data into Snowflake
+3. Execute dbt models (staging → facts → marts/signals)
+
+The Airflow DAGs define execution order, retries, and failure handling for the pipeline.
+
+---
+
+## dbt Layered Model
+
+### Staging Layer
+- Cleans and standardizes raw CSV data
+- Applies type casting and basic validation
+- No business logic
+- One-to-one mapping with raw inputs
+
+### Fact Layer
+- Core market facts (prices per ticker and date)
+- Time-series–oriented structure
+- Prepared for analytical calculations
+
+### Marts / Signals Layer
+- Calculation of Simple Moving Averages
+- Trend detection
+- Signal generation based on SMA relationships
+
+Each layer has a single, well-defined responsibility.
+
+---
+
+## Trading Strategy (Current)
+
+The current strategy is based on:
+- **three Simple Moving Averages**
+- relative positioning of short-, medium-, and long-term SMAs
+- trend and signal derivation from SMA relationships
+
+The project does **not** claim profitability or predictive power.  
+Its purpose is to **analyze historical behavior**, not to provide investment advice.
+
+---
+
+## Tech Stack
+
+- **Python**
+- **Apache Airflow**
+- **dbt**
+- **Snowflake**
+- **SQL**
+- **CSV-based datasets**
+
+Planned / future usage:
+- pandas
+- PySpark
+- REST API
+- React (UI)
+
+---
+
+## Why This Project Exists
+
+This project was built to:
+- practice and demonstrate **data engineering and analytics engineering**
+- show clean data modeling for financial time-series data
+- combine orchestration, warehousing, and transformations in a single pipeline
+- serve as a portfolio project for data-focused engineering roles
+
+---
+
+## Disclaimer
+
+This project is for **educational and demonstration purposes only**.  
+It does not constitute financial advice, trading recommendations, or investment guidance.
