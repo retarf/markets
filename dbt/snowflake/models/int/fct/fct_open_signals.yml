@@ -1,0 +1,41 @@
+version: 2
+  
+models:
+  - name: fct_open_signals
+    columns:
+      - name: ticker
+        data_tests:
+          - not_null
+      - name: trading_date
+        data_tests:
+          - not_null
+      - name: trend
+      - name: segment 
+        data_type: number
+
+
+unit_tests:
+
+  - name: test_open_signals
+    description: "test is checking if there is no duplicated rows with (ticker, trading_date) primary key after deduplication process."
+    model: fct_open_signals
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('fct_trend_segments')
+        rows:
+          - {trading_date: 2020-10-09, ticker: AAA, trend: null, is_new_trend: 0, segment: 0}
+          - {trading_date: 2020-10-10, ticker: AAA, trend: 'up', is_new_trend: 1, segment: 1}
+          - {trading_date: 2020-10-11, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 1}
+          - {trading_date: 2020-10-12, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 1}
+          - {trading_date: 2020-10-13, ticker: AAA, trend: null, is_new_trend: 0, segment: 1}
+          - {trading_date: 2020-10-14, ticker: AAA, trend: null, is_new_trend: 0, segment: 1}
+          - {trading_date: 2020-10-15, ticker: AAA, trend: 'up', is_new_trend: 1, segment: 2}
+          - {trading_date: 2020-10-16, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 2}
+          - {trading_date: 2020-10-17, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 2}
+          - {trading_date: 2020-10-18, ticker: AAA, trend: null, is_new_trend: 0, segment: 2}
+    expect:
+      rows:
+          - {open_date: 2020-10-10, ticker: AAA, trend: 'up', segment: 1}
+          - {open_date: 2020-10-15, ticker: AAA, trend: 'up', segment: 2}
