@@ -6,30 +6,36 @@ models:
   - name: fct_trend
     columns:
       - name: ticker
+        data_type: varchar
         data_tests:
           - not_null
       - name: trading_date
+        data_type: date
         data_tests:
           - not_null
       - name: trend_sma_5
+        data_type: varchar
         data_tests:
           - accepted_values:
               name: sma_5_accepted_values
               arguments:
                 values: "{{ var('valid_trend') }}"
       - name: trend_sma_10
+        data_type: varchar
         data_tests:
           - accepted_values:
               name: sma_10_accepted_values
               arguments:
                 values: "{{ var('valid_trend') }}"
       - name: trend_sma_20
+        data_type: varchar
         data_tests:
           - accepted_values:
               name: sma_20_accepted_values
               arguments:
                 values: "{{ var('valid_trend') }}"
       - name: trend
+        data_type: varchar
         data_tests:
           - accepted_values:
               name: trend_accepted_values
@@ -61,7 +67,7 @@ unit_tests:
     given:
       - input: ref('fct_sma')
         rows:
-          - {ticker: test, trading_date: 2020-01-01, close: 2.00, last_close: 1.00, last_sma_5: 1.50, sma_5: 1.00, sma_10: 2.00}
+          - {ticker: 'test', trading_date: 2020-01-01, close: 2.00, last_close: 1.00, last_sma_5: 1.50, sma_5: 1.00, sma_10: 2.00}
     expect:
       rows:
-        - {ticker: test, trading_date: 2020-01-01, trend_sma_5: 'up'}
+        - {ticker: 'test', trading_date: 2020-01-01, trend_sma_5: 'up'}

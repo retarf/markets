@@ -1,0 +1,76 @@
+version: 2
+  
+models:
+  - name: fct_trend_segments
+    columns:
+      - name: ticker
+        data_tests:
+          - not_null
+      - name: trading_date
+        data_tests:
+          - not_null
+      - name: prev_trend
+      - name: trend
+      - name: is_new_trend
+        data_type: number
+      - name: segment 
+        data_type: number
+
+
+unit_tests:
+
+  - name: test_trend_prev_data
+    description: "test is checking if there is no duplicated rows with (ticker, trading_date) primary key after deduplication process."
+    model: fct_trend_segments
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('fct_trend')
+        rows:
+          - {trading_date: 2020-10-09, ticker: test1, trend: null}
+          - {trading_date: 2020-10-10, ticker: test1, trend: up}
+          - {trading_date: 2020-10-11, ticker: test1, trend: up}
+          - {trading_date: 2020-10-12, ticker: test1, trend: up}
+          - {trading_date: 2020-10-13, ticker: test1, trend: null}
+          - {trading_date: 2020-10-14, ticker: test1, trend: null}
+    expect:
+      rows:
+          - {trading_date: 2020-10-09, ticker: test1, prev_trend: null}
+          - {trading_date: 2020-10-10, ticker: test1, prev_trend: null}
+          - {trading_date: 2020-10-11, ticker: test1, prev_trend: up}
+          - {trading_date: 2020-10-12, ticker: test1, prev_trend: up}
+          - {trading_date: 2020-10-13, ticker: test1, prev_trend: up}
+          - {trading_date: 2020-10-14, ticker: test1, prev_trend: null}
+
+  - name: test_trend_data_with_segments
+    description: "test is checking if there is no duplicated rows with (ticker, trading_date) primary key after deduplication process."
+    model: fct_trend_segments
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('fct_trend')
+        rows:
+          - {trading_date: 2020-10-09, ticker: AAA, trend: null}
+          - {trading_date: 2020-10-10, ticker: AAA, trend: 'up'}
+          - {trading_date: 2020-10-11, ticker: AAA, trend: 'up'}
+          - {trading_date: 2020-10-12, ticker: AAA, trend: 'up'}
+          - {trading_date: 2020-10-13, ticker: AAA, trend: null}
+          - {trading_date: 2020-10-14, ticker: AAA, trend: null}
+          - {trading_date: 2020-10-15, ticker: AAA, trend: 'up'}
+          - {trading_date: 2020-10-16, ticker: AAA, trend: 'up'}
+          - {trading_date: 2020-10-17, ticker: AAA, trend: 'up'}
+          - {trading_date: 2020-10-18, ticker: AAA, trend: null}
+    expect:
+      rows:
+          - {trading_date: 2020-10-09, ticker: AAA, trend: null, is_new_trend: 0, segment: 0}
+          - {trading_date: 2020-10-10, ticker: AAA, trend: 'up', is_new_trend: 1, segment: 1}
+          - {trading_date: 2020-10-11, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 1}
+          - {trading_date: 2020-10-12, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 1}
+          - {trading_date: 2020-10-13, ticker: AAA, trend: null, is_new_trend: 0, segment: 1}
+          - {trading_date: 2020-10-14, ticker: AAA, trend: null, is_new_trend: 0, segment: 1}
+          - {trading_date: 2020-10-15, ticker: AAA, trend: 'up', is_new_trend: 1, segment: 2}
+          - {trading_date: 2020-10-16, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 2}
+          - {trading_date: 2020-10-17, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 2}
+          - {trading_date: 2020-10-18, ticker: AAA, trend: null, is_new_trend: 0, segment: 2}
