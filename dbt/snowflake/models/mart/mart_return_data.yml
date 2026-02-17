@@ -1,0 +1,31 @@
+version: 2
+  
+models:
+  - name: mart_return_data
+    columns:
+      - name: ticker
+        data_tests:
+          - not_null
+      - name: trading_date
+        data_tests:
+          - not_null
+
+
+unit_tests:
+  - name: test_check_calculation
+    description: "test is checking if there is no duplicated rows with (ticker, trading_date) primary key after deduplication process."
+    model: mart_return_data
+    overrides:
+      macros:
+        is_incremental: false
+    given:
+      - input: ref('mart_trend_data')
+        rows:
+          - {trading_date: 2020-10-10, ticker: test1, close: 10, trend: up, signal: up}
+          - {trading_date: 2020-10-11, ticker: test1, close: 11, trend: up, signal: null}
+          - {trading_date: 2020-10-12, ticker: test2, close: 8, trend: up, signal: null}
+          - {trading_date: 2020-10-12, ticker: test1, close: 12, trend: up, signal: null}
+          - {trading_date: 2020-10-13, ticker: test1, close: 8, trend: null, signal: null}
+    expect:
+      rows:
+        - {ticker: test, trading_date: 2020-01-01, open: 6.00, high: 6.00, low: 6.00, close: 6.00, volume: 200, source_file: 20210102_test.csv, load_ts: 2025-01-02T10:00:00.000+0000}
