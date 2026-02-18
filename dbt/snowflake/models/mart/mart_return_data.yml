@@ -6,26 +6,52 @@ models:
       - name: ticker
         data_tests:
           - not_null
-      - name: trading_date
+      - name: trend
+        data_tests:
+          - not_null
+      - name: open_date
+        data_tests:
+          - not_null
+      - name: open_price
+        data_tests:
+          - not_null
+      - name: close_date
+        data_tests:
+          - not_null
+      - name: close_price
+        data_tests:
+          - not_null
+      - name: profit_per_share
+        data_tests:
+          - not_null
+      - name: return_rate
+        data_tests:
+          - not_null
+      - name: segment
         data_tests:
           - not_null
 
 
 unit_tests:
-  - name: test_check_calculation
+  - name: test_return_rate_calculations
     description: "test is checking if there is no duplicated rows with (ticker, trading_date) primary key after deduplication process."
     model: mart_return_data
     overrides:
       macros:
         is_incremental: false
     given:
-      - input: ref('mart_trend_data')
+      - input: ref('fct_open_signals')
         rows:
-          - {trading_date: 2020-10-10, ticker: test1, close: 10, trend: up, signal: up}
-          - {trading_date: 2020-10-11, ticker: test1, close: 11, trend: up, signal: null}
-          - {trading_date: 2020-10-12, ticker: test2, close: 8, trend: up, signal: null}
-          - {trading_date: 2020-10-12, ticker: test1, close: 12, trend: up, signal: null}
-          - {trading_date: 2020-10-13, ticker: test1, close: 8, trend: null, signal: null}
+          - {open_date: 2020-10-12, ticker: AAA, trend: 'up', segment: 1, open_price: 10}
+          - {open_date: 2020-10-17, ticker: AAA, trend: 'up', segment: 2, open_price: 10}
+          - {open_date: 2020-10-20, ticker: AAA, trend: 'down', segment: 3, open_price: 20}
+      - input: ref('fct_close_signals')
+        rows:
+          - {close_date: 2020-10-13, ticker: AAA, trend: 'up', segment: 1, close_price: 12}
+          - {close_date: 2020-10-18, ticker: AAA, trend: 'up', segment: 2, close_price: 14}
+          - {close_date: 2020-10-21, ticker: AAA, trend: 'down', segment: 3, close_price: 10}
     expect:
       rows:
-        - {ticker: test, trading_date: 2020-01-01, open: 6.00, high: 6.00, low: 6.00, close: 6.00, volume: 200, source_file: 20210102_test.csv, load_ts: 2025-01-02T10:00:00.000+0000}
+        - {ticker: AAA, open_date: 2020-10-12, open_price: 10, close_date: 2020-10-13, close_price: 12, profit_per_share: 2, return_rate: 20, segment: 1}
+        - {ticker: AAA, open_date: 2020-10-17, open_price: 10, close_date: 2020-10-18, close_price: 14, profit_per_share: 4, return_rate: 40, segment: 2}
+        - {ticker: AAA, open_date: 2020-10-20, open_price: 20, close_date: 2020-10-21, close_price: 10, profit_per_share: 10, return_rate: 50, segment: 3}
