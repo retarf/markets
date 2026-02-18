@@ -1,12 +1,12 @@
 version: 2
   
 models:
-  - name: fct_open_signals
+  - name: fct_close_signals
     columns:
       - name: ticker
         data_tests:
           - not_null
-      - name: open_date
+      - name: close_date
         data_tests:
           - not_null
       - name: trend
@@ -16,9 +16,9 @@ models:
 
 unit_tests:
 
-  - name: test_open_signals
+  - name: test_close_signals
     description: "test is checking if there is no duplicated rows with (ticker, trading_date) primary key after deduplication process."
-    model: fct_open_signals
+    model: fct_close_signals
     overrides:
       macros:
         is_incremental: false
@@ -37,5 +37,5 @@ unit_tests:
           - {trading_date: 2020-10-18, ticker: AAA, trend: null, is_new_trend: 0, segment: 2}
     expect:
       rows:
-          - {open_date: 2020-10-10, ticker: AAA, trend: 'up', segment: 1}
-          - {open_date: 2020-10-15, ticker: AAA, trend: 'up', segment: 2}
+          - {close_date: 2020-10-12, ticker: AAA, trend: 'up', segment: 1}
+          - {close_date: 2020-10-17, ticker: AAA, trend: 'up', segment: 2}
