@@ -35,7 +35,19 @@ unit_tests:
           - {trading_date: 2020-10-16, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 2}
           - {trading_date: 2020-10-17, ticker: AAA, trend: 'up', is_new_trend: 0, segment: 2}
           - {trading_date: 2020-10-18, ticker: AAA, trend: null, is_new_trend: 0, segment: 2}
+      - input: ref('fct_close_prices')
+        rows:
+          - {trading_date: 2020-10-09, ticker: AAA, close: 10}
+          - {trading_date: 2020-10-10, ticker: AAA, close: 11}
+          - {trading_date: 2020-10-11, ticker: AAA, close: 13}
+          - {trading_date: 2020-10-12, ticker: AAA, close: 14}
+          - {trading_date: 2020-10-13, ticker: AAA, close: 15}
+          - {trading_date: 2020-10-14, ticker: AAA, close: 16}
+          - {trading_date: 2020-10-15, ticker: AAA, close: 17}
+          - {trading_date: 2020-10-16, ticker: AAA, close: 18}
+          - {trading_date: 2020-10-17, ticker: AAA, close: 19}
+          - {trading_date: 2020-10-18, ticker: AAA, close: 20}
     expect:
       rows:
-          - {close_date: 2020-10-12, ticker: AAA, trend: 'up', segment: 1}
-          - {close_date: 2020-10-17, ticker: AAA, trend: 'up', segment: 2}
+          - {close_date: 2020-10-12, ticker: AAA, trend: 'up', segment: 1, close_price: 14}
+          - {close_date: 2020-10-17, ticker: AAA, trend: 'up', segment: 2, close_price: 19}
