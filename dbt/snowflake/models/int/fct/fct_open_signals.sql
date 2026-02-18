@@ -1,6 +1,6 @@
 {{ config(
     materialized='incremental',
-    unique_key=['ticker', 'trading_date'],
+    unique_key=['ticker', 'segment'],
     incremental_strategy='merge'
 ) }}
 
@@ -15,9 +15,15 @@ with segment_data as (select * from {{ ref('fct_trend_segments')}} where trend i
         from segment_data
     )
     select 
-        trading_date as open_date,
-        ticker, 
+        r.trading_date as open_date,
+        r.ticker, 
         trend,
-        segment
-    from ranked
+        segment,
+        p.close as open_price
+    from ranked r
+    join {{ ref('fct_close_prices') }} p
+    on r.trading_date = p.trading_date
+    and r.ticker = p.ticker
     where rn = 1
+    
+
