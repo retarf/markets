@@ -29,21 +29,7 @@ engine = create_engine(URL(
         'private_key': pkb,
         },
     )
-# try:
-#     connection = engine.connect()
-#     results = connection.execute(text('select * from markets.dev.mart_trend_data limit 10')).fetchall()
-#     for row in results:
-#         print(row)
-# finally:
-#     connection.close()
-#     engine.dispose()
 
-
-# def get_session():
-#     with Session(engine) as session:
-#         yield session
-
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

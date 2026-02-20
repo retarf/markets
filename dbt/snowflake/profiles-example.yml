@@ -2,12 +2,12 @@ markets:
   outputs:
     dev:
       type: snowflake
-      account: xxx
-      user: dbt
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
 
-      role: TRANSFORM
+      role: "TRANSFORM"
       private_key_path: '/project/dbt/.credentials/rsa_key.p8'
-      private_key_passphrase: xxx
+      private_key_passphrase: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_FILE_PWD') }}"
 
       database: MARKETS
       schema: DEV

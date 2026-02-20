@@ -11,5 +11,6 @@ WORKDIR /api
 COPY    api/requirements.txt api/requirements.txt
 #RUN     pip install --upgrade pip
 RUN     pip install -r api/requirements.txt
+RUN     PATH=$PATH:/api/apps
 
 CMD     ["bash"]

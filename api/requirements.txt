@@ -13,16 +13,37 @@ anyio==4.12.1
     #   httpx
     #   starlette
     #   watchfiles
+asn1crypto==1.5.1
+    # via snowflake-connector-python
+boto3==1.42.42
+    # via snowflake-connector-python
+botocore==1.42.42
+    # via
+    #   boto3
+    #   s3transfer
+    #   snowflake-connector-python
 certifi==2026.1.4
     # via
     #   httpcore
     #   httpx
+    #   requests
     #   sentry-sdk
+    #   snowflake-connector-python
+cffi==2.0.0
+    # via cryptography
+charset-normalizer==3.4.4
+    # via
+    #   requests
+    #   snowflake-connector-python
 click==8.3.1
     # via
     #   rich-toolkit
     #   typer
     #   uvicorn
+cryptography==46.0.4
+    # via
+    #   pyopenssl
+    #   snowflake-connector-python
 dnspython==2.8.0
     # via email-validator
 email-validator==2.3.0
@@ -37,6 +58,10 @@ fastapi-cloud-cli==0.11.0
     # via fastapi-cli
 fastar==0.8.0
     # via fastapi-cloud-cli
+filelock==3.20.3
+    # via snowflake-connector-python
+greenlet==3.3.1
+    # via sqlalchemy
 h11==0.16.0
     # via
     #   httpcore
@@ -54,14 +79,26 @@ idna==3.11
     #   anyio
     #   email-validator
     #   httpx
+    #   requests
+    #   snowflake-connector-python
 jinja2==3.1.6
     # via fastapi
+jmespath==1.1.0
+    # via
+    #   boto3
+    #   botocore
 markdown-it-py==4.0.0
     # via rich
 markupsafe==3.0.3
     # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
+packaging==26.0
+    # via snowflake-connector-python
+platformdirs==4.5.1
+    # via snowflake-connector-python
+pycparser==3.0
+    # via cffi
 pydantic[email]==2.12.5
     # via
     #   fastapi
@@ -76,14 +113,24 @@ pydantic-settings==2.12.0
     # via fastapi
 pygments==2.19.2
     # via rich
+pyjwt==2.11.0
+    # via snowflake-connector-python
+pyopenssl==25.3.0
+    # via snowflake-connector-python
+python-dateutil==2.9.0.post0
+    # via botocore
 python-dotenv==1.2.1
     # via
     #   pydantic-settings
     #   uvicorn
 python-multipart==0.0.22
     # via fastapi
+pytz==2025.2
+    # via snowflake-connector-python
 pyyaml==6.0.3
     # via uvicorn
+requests==2.32.5
+    # via snowflake-connector-python
 rich==14.3.2
     # via
     #   rich-toolkit
@@ -94,12 +141,26 @@ rich-toolkit==0.18.1
     #   fastapi-cloud-cli
 rignore==0.7.6
     # via fastapi-cloud-cli
+s3transfer==0.16.0
+    # via boto3
 sentry-sdk==2.52.0
     # via fastapi-cloud-cli
 shellingham==1.5.4
     # via typer
+six==1.17.0
+    # via python-dateutil
+snowflake-connector-python==4.2.0
+    # via snowflake-sqlalchemy
+snowflake-sqlalchemy==1.8.2
+    # via -r requirements.in
+sortedcontainers==2.4.0
+    # via snowflake-connector-python
+sqlalchemy==2.0.46
+    # via snowflake-sqlalchemy
 starlette==0.50.0
     # via fastapi
+tomlkit==0.14.0
+    # via snowflake-connector-python
 typer==0.21.1
     # via
     #   fastapi-cli
@@ -111,6 +172,8 @@ typing-extensions==4.15.0
     #   pydantic-core
     #   pydantic-extra-types
     #   rich-toolkit
+    #   snowflake-connector-python
+    #   sqlalchemy
     #   typer
     #   typing-inspection
 typing-inspection==0.4.2
@@ -118,7 +181,10 @@ typing-inspection==0.4.2
     #   pydantic
     #   pydantic-settings
 urllib3==2.6.3
-    # via sentry-sdk
+    # via
+    #   botocore
+    #   requests
+    #   sentry-sdk
 uvicorn[standard]==0.40.0
     # via
     #   fastapi
