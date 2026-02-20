@@ -54,6 +54,7 @@ permissions = [
     'DROP ROLE IF EXISTS TRANSFORM;',
     'CREATE ROLE TRANSFORM;',
     'GRANT ROLE TRANSFORM TO USER dbt;',
+    'GRANT ROLE TRANSFORM TO USER pyspark;',
     'GRANT ROLE TRANSFORM TO ROLE ACCOUNTADMIN;',
     'GRANT OPERATE ON WAREHOUSE COMPUTE_WH TO ROLE TRANSFORM;',
     'GRANT ALL ON WAREHOUSE COMPUTE_WH TO ROLE TRANSFORM;',
@@ -72,6 +73,12 @@ def get_public_key_string(public_key_line_list: List[str]) -> str:
 def get_public_key():
     public_key = None
     with open(os.environ.get('SNOWFLAKE_PUBLIC_KEY_FILE'), 'r') as f:
+        public_key = get_public_key_string(f.readlines())
+    return public_key
+
+def get_pyspark_public_key():
+    public_key = None
+    with open(os.environ.get('PYSPARK_PUBLIC_KEY_FILE'), 'r') as f:
         public_key = get_public_key_string(f.readlines())
     return public_key
 
@@ -98,7 +105,9 @@ def upgrade() -> None:
         # 'USE ROLE USERADMIN',
         'USE ROLE ACCOUNTADMIN',
         "CREATE OR REPLACE USER dbt LOGIN_NAME = 'dbt' DEFAULT_WAREHOUSE = COMPUTE_WH DEFAULT_ROLE=TRANSFORM TYPE=SERVICE;",
+        "CREATE OR REPLACE USER pyspark LOGIN_NAME = 'pyspark' DEFAULT_WAREHOUSE = COMPUTE_WH DEFAULT_ROLE=TRANSFORM TYPE=SERVICE;",
         "ALTER USER dbt SET RSA_PUBLIC_KEY = '{}';".format(get_public_key()),
+        "ALTER USER pyspark SET RSA_PUBLIC_KEY = '{}';".format(get_pyspark_public_key()),
         #'USE ROLE TRANSFORM',
         'CREATE DATABASE IF NOT EXISTS {};'.format(DATABASE),
         'USE DATABASE {};'.format(DATABASE),
