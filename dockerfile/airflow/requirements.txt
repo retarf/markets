@@ -210,7 +210,7 @@ ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.3
     # via stack-data
-py4j==0.10.9.9
+py4j==0.10.9.7
     # via pyspark
 pyarrow==22.0.0
     # via
@@ -234,7 +234,7 @@ pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
-pyspark==4.1.0
+pyspark==4.1.1
     # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via
