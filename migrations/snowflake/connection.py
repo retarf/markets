@@ -13,26 +13,10 @@ class COLORS:
 DATABASE = os.environ.get('SNOWFLAKE_DATABASE')
 user = os.environ.get('SNOWFLAKE_ADMIN_USER')
 
-# connection_params = {
-#     'account': os.environ.get('SNOWFLAKE_ACCOUNT'),
-#     'user': os.environ.get('SNOWFLAKE_USER'),
-#     'authenticator': 'SNOWFLAKE_JWT',
-#     'private_key_file': os.environ.get('SNOWFLAKE_PRIVATE_KEY_FILE'),
-#     'private_key_file_pwd': os.environ.get('SNOWFLAKE_PRIVATE_KEY_FILE_PWD'),
-#     'warehouse': os.environ.get('SNOWFLAKE_WAREHOUSE'),
-#     'database': os.environ.get('SNOWFLAKE_DATABASE'),
-#     # 'schema': os.environ.get('SNOWFLAKE_SCHEMA')
-# }
-
-
 connection_params = {
     'account': os.environ.get('SNOWFLAKE_ACCOUNT'),
     'user': user,
     'password': os.environ.get('SNOWFLAKE_ADMIN_PASSWORD'),
-    # 'authenticator': 'SNOWFLAKE_JWT',
-    # 'warehouse': os.environ.get('SNOWFLAKE_WAREHOUSE'),
-    # 'database': os.environ.get('SNOWFLAKE_DATABASE'),
-    # 'schema': os.environ.get('SNOWFLAKE_SCHEMA')
 }
 
 RAW_SCHEMA = 'RAW'
@@ -102,13 +86,11 @@ def execute_queries(queries: List) -> None:
 
 def upgrade() -> None:
     queries = [
-        # 'USE ROLE USERADMIN',
         'USE ROLE ACCOUNTADMIN',
         "CREATE OR REPLACE USER dbt LOGIN_NAME = 'dbt' DEFAULT_WAREHOUSE = COMPUTE_WH DEFAULT_ROLE=TRANSFORM TYPE=SERVICE;",
         "CREATE OR REPLACE USER pyspark LOGIN_NAME = 'pyspark' DEFAULT_WAREHOUSE = COMPUTE_WH DEFAULT_ROLE=TRANSFORM TYPE=SERVICE;",
         "ALTER USER dbt SET RSA_PUBLIC_KEY = '{}';".format(get_public_key()),
         "ALTER USER pyspark SET RSA_PUBLIC_KEY = '{}';".format(get_pyspark_public_key()),
-        #'USE ROLE TRANSFORM',
         'CREATE DATABASE IF NOT EXISTS {};'.format(DATABASE),
         'USE DATABASE {};'.format(DATABASE),
         'CREATE SCHEMA IF NOT EXISTS {};'.format(RAW_SCHEMA),
