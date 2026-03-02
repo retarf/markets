@@ -7,6 +7,8 @@ services:
           dockerfile: dockerfile/airflow/Dockerfile
         depends_on: 
             - db
+        environment:
+          PYTHONPATH: /project/airflow:/project/src
         env_file:
           - .env
         volumes:
@@ -16,7 +18,7 @@ services:
             - ./dockerfile:/project/dockerfile
             - ./airflow:/project/airflow
             - ./dbt:/project/dbt
-            - ./pyspark:/project/pyspark
+            - ./src:/project/src
             - ./pandas:/project/pandas
             - ./user/.bashrc:/home/airflow/.bashrc
             - ./user/.ipython:/home/airflow/.ipython

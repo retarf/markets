@@ -1,5 +1,5 @@
 import os
-from pyspark.sql import SparkSession
+from src.sql import SparkSession
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 import re
