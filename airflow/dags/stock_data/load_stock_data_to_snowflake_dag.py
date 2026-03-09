@@ -9,10 +9,10 @@ from airflow.providers.standard.operators.python import PythonOperator
 
 from snowflake.connector.pandas_tools import write_pandas
 
-from handlers import get_ticker_from_file_name, get_file_list
-from connection import connect
+from airflow.src.handlers import get_ticker_from_file_name, get_file_list
+from airflow.src.connection import connect
 
-from constants import CSV, NEW_DATA_DIR, UPLOADED_DATA_DIR
+from airflow.src.constants import CSV, NEW_DATA_DIR, UPLOADED_DATA_DIR
 
 PARQUET_EXTENSION = "parquet"
 RAW_SCHEMA="RAW"

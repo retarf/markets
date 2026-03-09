@@ -1,10 +1,11 @@
+
 CSV = "csv"
 PARQUET = "parquet"
 TICKER = "TICKER"
 SOURCE_FILE = "SOURCE_FILE"
 
 DATE_FORMAT = "%Y%m%d"
-NEW_DATA_DIR = "/project/datalake/new"
+DATA_DIR = "/project/datalake"
 UPLOADED_DATA_DIR = "/project/datalake/uploaded"
 
 
@@ -24,3 +25,6 @@ class COLUMN:
     LOW = "LOW"
     CLOSE = "CLOSE"
     VOLUME = "VOLUME"
+
+
+TICKER_LIST = ["xtb", "ORL"]

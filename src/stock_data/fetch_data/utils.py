@@ -2,7 +2,7 @@ import os
 
 from datetime import datetime
 
-from constants import DATE_FORMAT, CSV
+from airflow.src.constants import DATE_FORMAT, CSV
 
 
 def get_ticker_from_file_name(file_name):
@@ -13,8 +13,8 @@ def get_file_list(directory, extension):
     return [file for file in os.listdir(directory) if file.split(".")[-1] == extension]
 
 
-def get_current_file_name(ticker):
-    return f'{datetime.now().strftime(DATE_FORMAT)}_{ticker}.{CSV}'
+def get_file_name_with_date(ticker, datetime_now):
+    return f'{datetime_now.strftime(DATE_FORMAT)}_{ticker}.{CSV}'
 
 
 def get_latest_file_list(file_list):

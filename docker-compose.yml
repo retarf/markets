@@ -8,7 +8,7 @@ services:
         depends_on: 
             - db
         environment:
-          PYTHONPATH: /project/airflow:/project/src
+          PYTHONPATH: /project/airflow:/project/airflow/src:/project/src
         env_file:
           - .env
         volumes:
