@@ -3,10 +3,7 @@ CSV = "csv"
 PARQUET = "parquet"
 TICKER = "TICKER"
 SOURCE_FILE = "SOURCE_FILE"
-
 DATE_FORMAT = "%Y%m%d"
-DATA_DIR = "/project/datalake"
-UPLOADED_DATA_DIR = "/project/datalake/uploaded"
 
 
 class RAW_COLUMN:
