@@ -1,7 +1,5 @@
 .env
 .idea
-root
-user
 datalake
 .python-version
-airbnb
+.dev

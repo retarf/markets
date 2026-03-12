@@ -12,17 +12,13 @@ services:
         env_file:
           - .env
         volumes:
-            - ./root:/root
             - ./datalake:/project/datalake
             - ./migrations:/project/migrations
             - ./dockerfile:/project/dockerfile
             - ./airflow:/project/airflow
             - ./dbt:/project/dbt
             - ./src:/project/src
-            - ./pandas:/project/pandas
-            - ./user/.bashrc:/home/airflow/.bashrc
-            - ./user/.ipython:/home/airflow/.ipython
-            - ./airbnb:/project/airbnb
+            - ${DOCKER_HOME_DIR:-./.dev/home}:/home/airflow
         ports:
             - "8080:8080"
             - "7070:7070"
@@ -40,23 +36,7 @@ services:
           - 5432:5432
         volumes:
             - db:/var/lib/postgresql/data
-            - ./root:/root
             - ./datalake:/datalake
-    api:
-      build:
-        context: .
-        dockerfile: api/Dockerfile
-      env_file:
-        - .env
-      volumes:
-        - ./api:/api
-        - ./api/user:/root
-      ports:
-        - "8000:8000"
-      stdin_open: true
-      tty: true
-      command: bash -c "fastapi dev --host 0.0.0.0 apps/trend/views.py"
-#      user: ${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-0}
 
 
 volumes:
