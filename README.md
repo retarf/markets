@@ -1,195 +1,284 @@
-# 📊 Markets — Data Engineering & Analytics Project
+# Markets — Data Engineering & Analytics Project
 
-## Overview
+Markets is a portfolio project focused on building an end-to-end batch pipeline for historical stock market data.
 
-**Markets** is a data engineering and analytics project focused on researching historical returns of a **simple trading strategy based on three Simple Moving Averages (SMA)**.
+The project combines:
 
-The project demonstrates an end-to-end data pipeline built with **modern data engineering and analytics engineering practices**, including:
-- batch data ingestion,
-- warehouse-centric transformations,
-- workflow orchestration,
-- and signal generation for financial time-series data.
+- **Python** for ingestion logic
+- **Apache Airflow** for orchestration
+- **PySpark** for loading and validating data
+- **Snowflake** as the analytical warehouse
+- **dbt** for downstream SQL transformations
+- **Docker Compose** for local development
 
-The project is intentionally designed as a **demo / portfolio project**.  
-It focuses on **data pipelines, transformations, and analytical logic**, not on real-time trading or production execution.
+The current implementation is intentionally **batch-oriented** and **warehouse-first**. It is meant to demonstrate data engineering practices around ingestion, orchestration, validation, incremental loading, and layered transformations rather than real-time trading or investment automation.
 
----
+## Project goals
 
-## Project Goals
+- build a reproducible market data pipeline
+- orchestrate ingestion and warehouse loading with Airflow
+- validate raw input data before loading it into Snowflake
+- support incremental processing using a metastore table
+- prepare a clean base for analytical models and trading signals in dbt
+- showcase production-minded project structure for a Data Engineering portfolio
 
-- Demonstrate **data engineering best practices**
-- Build a reproducible, layered data model for market data
-- Generate trading signals based on **three SMA indicators**
-- Orchestrate batch workflows using **Apache Airflow**
-- Prepare a foundation for further **strategy return analysis**
+## Current scope
 
----
+### In scope
 
-## Scope and Limitations
+- downloading historical market data from an external source as CSV files
+- storing raw files in a dated local datalake structure
+- orchestrating ingestion with Airflow DAGs
+- loading recent data into Snowflake with PySpark
+- running basic data quality checks before write
+- keeping incremental-load state in a Snowflake metastore table
+- modeling downstream analytical layers in dbt
 
-### In scope (current state)
-- Batch ingestion of market data as CSV files
-- Workflow orchestration with Apache Airflow
-- Data transformations using dbt
-- Snowflake as the analytical warehouse
-- Technical indicators (SMA), trends, and signals
+### Out of scope
 
-### Out of scope (current state)
-- Real-time / streaming ingestion
-- Trade execution
-- Predictive modeling or alpha generation
-- API layer or frontend
+- real-time / streaming ingestion
+- order execution or broker integration
+- predictive modeling / ML
+- public API or frontend application
+- production observability stack
 
-### Planned extensions
-- Strategy return analysis using **pandas** and **PySpark**
-- API layer for querying results
-- Simple React-based frontend for visualization
+## Architecture overview
 
----
+The pipeline currently follows this flow:
 
-## Data Source
-
-- Input data is provided as **CSV files**
-- CSV files are downloaded via an external API
-- The data provider is intentionally **abstracted and not included** due to licensing and non-commercial usage restrictions
-- The project focuses on **data processing and analytics**, not vendor-specific ingestion logic
-
----
-
-## Input Data Format
-
-The pipeline expects market data in **CSV format** with a consistent schema.
-
-### Expected CSV Structure
-
-| Column name     | Type    | Description |
-|-----------------|---------|-------------|
-| `trading_date`  | DATE    | Trading date |
-| `ticker`        | STRING  | Market symbol (e.g. AAPL, MSFT) |
-| `open`          | NUMERIC | Opening price |
-| `high`          | NUMERIC | Highest price |
-| `low`           | NUMERIC | Lowest price |
-| `close`         | NUMERIC | Closing price |
-| `volume`        | NUMERIC | Trading volume |
-
-### Assumptions
-
-- Dates are in **ISO format (`YYYY-MM-DD`)**
-- Prices are assumed to be **adjusted prices**
-- Data is historical and append-only
-- Data quality checks (nulls, duplicates, ordering) are handled in dbt staging models
-
-The CSV schema is treated as a **data contract**, enforced during transformations.
-
----
-
-## Architecture Overview
-
-The project follows a **batch-oriented, warehouse-first architecture**:
-
-```
-External API
-   ↓
-CSV files
-   ↓
-Apache Airflow (orchestration)
-   ↓
-Snowflake (raw data)
-   ↓
-dbt staging models
-   ↓
-dbt fact models
-   ↓
-dbt marts / signals
+```text
+External data source
+        ↓
+CSV files in local datalake
+        ↓
+Airflow DAGs
+        ↓
+PySpark ingestion and validation
+        ↓
+Snowflake raw + metastore tables
+        ↓
+dbt transformations
+        ↓
+Analytical models / signals
 ```
 
-All analytical and business logic is implemented as **SQL models in dbt**, ensuring:
-- reproducibility,
-- testability,
-- transparency of transformations.
+This separation is deliberate:
 
----
+- **Airflow** controls execution and dependencies
+- **PySpark** handles file reading, filtering, validation, and loading
+- **Snowflake** stores raw and metadata tables
+- **dbt** owns analytical SQL transformations
 
-## Workflow Orchestration (Apache Airflow)
+## Repository structure
 
-Apache Airflow is used to orchestrate the data pipeline.
+The README below reflects the current repository layout:
 
-Airflow responsibilities include:
-- scheduling pipeline runs,
-- managing task dependencies,
-- coordinating ingestion and transformation steps.
+```text
+markets/
+├── airflow/
+│   ├── dags/
+│   │   └── stock_data/
+│   │       ├── fetch_data_dag.py
+│   │       └── ingest_to_snowflake_dag.py
+│   ├── .gitignore
+│   └── airflow.cfg
+├── dbt/
+│   ├── .gitignore
+│   └── snowflake/
+│       ├── analyses/
+│       ├── macros/
+│       ├── models/
+│       ├── seeds/
+│       ├── snapshots/
+│       ├── tests/
+│       ├── .gitignore
+│       ├── .user.yml
+│       ├── README.md
+│       ├── dbt_project.yml
+│       ├── package-lock.yml
+│       ├── packages.yml
+│       └── profiles-example.yml
+├── dockerfile/
+│   └── airflow/
+│       ├── Dockerfile
+│       ├── requirements.in
+│       └── requirements.txt
+├── migrations/
+│   └── snowflake/
+│       └── migrate.py
+├── src/
+│   ├── stock_data/
+│   │   ├── fetch_data/
+│   │   │   ├── __init__.py
+│   │   │   ├── operations.py
+│   │   │   └── utils.py
+│   │   ├── push_data/
+│   │   │   ├── tests/
+│   │   │   ├── __init__.py
+│   │   │   ├── operations.py
+│   │   │   └── quality_checks.py
+│   │   └── __init__.py
+│   ├── warehouse/
+│   │   ├── snowflake/
+│   │   │   ├── libs/
+│   │   │   ├── __init__.py
+│   │   │   ├── session.py
+│   │   │   └── table.py
+│   │   └── __init__.py
+│   ├── .gitignore
+│   ├── __init__.py
+│   └── assets.py
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+└── README.md
+```
 
-Typical workflow:
-1. Download market data and store it as CSV
-2. Load raw CSV data into Snowflake
-3. Execute dbt models (staging → facts → marts/signals)
+## Pipeline components
 
-The Airflow DAGs define execution order, retries, and failure handling for the pipeline.
+### 1. Fetch DAG
 
----
+`airflow/dags/stock_data/fetch_data_dag.py`
 
-## dbt Layered Model
+This DAG runs daily and uses **dynamic task mapping** to fetch data for each ticker from `TICKER_LIST`. It writes CSV files into a deterministic dated directory under the datalake and emits an Airflow asset after the fetch step completes. citeturn992202view0turn992202view2turn185540view0
 
-### Staging Layer
-- Cleans and standardizes raw CSV data
-- Applies type casting and basic validation
-- No business logic
-- One-to-one mapping with raw inputs
+Current tickers are defined in code and the fetched files are stored under a directory structure based on execution date, for example `dt=YYYY-MM-DD`. The fetch logic also validates the response and rejects a known “no data” payload. citeturn185540view0
 
-### Fact Layer
-- Core market facts (prices per ticker and date)
-- Time-series–oriented structure
-- Prepared for analytical calculations
+### 2. Ingestion DAG
 
-### Marts / Signals Layer
-- Calculation of Simple Moving Averages
-- Trend detection
-- Signal generation based on SMA relationships
+`airflow/dags/stock_data/ingest_to_snowflake_dag.py`
 
-Each layer has a single, well-defined responsibility.
+This DAG runs daily and processes files from the datalake. Its current flow is:
 
----
+1. find the latest eligible dated directory,
+2. list CSV files in that directory,
+3. process each file with dynamic task mapping,
+4. load recent rows into Snowflake. citeturn992202view1
 
-## Trading Strategy (Current)
+### 3. PySpark loading logic
 
-The current strategy is based on:
-- **three Simple Moving Averages**
-- relative positioning of short-, medium-, and long-term SMAs
-- trend and signal derivation from SMA relationships
+`src/stock_data/push_data/operations.py`
 
-The project does **not** claim profitability or predictive power.  
-Its purpose is to **analyze historical behavior**, not to provide investment advice.
+The PySpark ingestion layer:
 
----
+- reads CSV files with an explicit schema,
+- identifies ticker and processing date from the file path,
+- loads the metastore table from Snowflake,
+- determines the latest already-loaded business date for the ticker,
+- filters only recent rows,
+- applies quality checks,
+- writes raw data to Snowflake,
+- writes the newest processed date back to the metastore table. citeturn185540view1turn808173view0turn992202view3
 
-## Tech Stack
+This is the most important production-minded idea in the project right now: **incremental loading is controlled by state kept in Snowflake rather than by reloading everything every time**. citeturn185540view1turn808173view0
 
-- **Python**
-- **Apache Airflow**
-- **dbt**
-- **Snowflake**
-- **SQL**
-- **CSV-based datasets**
+## Data quality checks
 
-Planned / future usage:
-- pandas
-- PySpark
-- REST API
-- React (UI)
+Basic validation is implemented in `src/stock_data/push_data/quality_checks.py`.
 
----
+Current checks verify:
 
-## Why This Project Exists
+- required fields are not null,
+- prices and volume are greater than zero,
+- `HIGH >= LOW`. citeturn992202view4
 
-This project was built to:
-- practice and demonstrate **data engineering and analytics engineering**
-- show clean data modeling for financial time-series data
-- combine orchestration, warehousing, and transformations in a single pipeline
-- serve as a portfolio project for data-focused engineering roles
+This is a good direction because quality is enforced before write, not left entirely to downstream modeling.
 
----
+## Incremental loading and metastore
+
+The project already contains a metastore pattern.
+
+`src/stock_data/push_data/__init__.py` defines a Snowflake metastore table for storing the last loaded trading date per ticker, and `migrations/snowflake/migrate.py` creates that table during setup. citeturn808173view0turn185540view4
+
+This allows the ingestion logic to:
+
+- read the previously loaded date,
+- keep only newer records,
+- update state after a successful load. citeturn185540view1
+
+That is much better than reloading the full history every day.
+
+## Snowflake setup
+
+Snowflake bootstrap is handled in `migrations/snowflake/migrate.py` using the Snowflake Python connector.
+
+The migration script currently creates:
+
+- the database,
+- raw and development schemas,
+- the raw stock data table,
+- the metastore schema,
+- the metastore table,
+- users / roles / grants for dbt and PySpark service users. citeturn185540view4
+
+This is a strong point of the project because infrastructure/bootstrap concerns are separated from the main pipeline runtime.
+
+## Warehouse access layer
+
+The Snowflake access helpers live under `src/warehouse/snowflake/`.
+
+- `session.py` builds Spark sessions and Snowflake connector options,
+- `table.py` provides reusable `load_table` and `save_table` helpers. citeturn185540view2turn992202view3
+
+This keeps connector details out of the DAG code and out of the business logic.
+
+## dbt layer
+
+The repository contains a dedicated dbt project under `dbt/snowflake/` with the standard dbt structure: `models`, `macros`, `tests`, `seeds`, `snapshots`, and configuration files such as `dbt_project.yml` and `profiles-example.yml`. citeturn196408view3
+
+That gives the project a good separation between:
+
+- ingestion and loading,
+- warehouse storage,
+- analytical SQL modeling.
+
+## Local development
+
+The project uses Docker Compose to run the local environment. The compose file builds an Airflow-based service from `dockerfile/airflow/Dockerfile`, mounts the project directories, loads environment variables from `.env`, and starts a Postgres service as well. It also supports a custom home directory mount through `DOCKER_HOME_DIR`. citeturn915894view2
+
+Typical startup:
+
+```bash
+docker compose up --build
+```
+
+## Environment configuration
+
+The repository contains `.env.example`, which should be copied to `.env` and filled with local values before running the project. The project relies on environment variables for:
+
+- Snowflake account and warehouse settings,
+- db / service-user credentials,
+- key file paths for Snowflake authentication,
+- external data source URI. citeturn185540view0turn185540view2turn185540view4
+
+## What this project already shows well
+
+This repo already demonstrates several good data engineering practices:
+
+- clear separation of ingestion, orchestration, warehouse access, and transformations,
+- deterministic datalake directory structure,
+- explicit input schema for CSV loading,
+- pre-load quality checks,
+- incremental loading via a metastore table,
+- Snowflake bootstrap separated into migrations,
+- Airflow dynamic task mapping. citeturn185540view0turn185540view1turn185540view4turn992202view0turn992202view1
+
+## Known limitations / next improvements
+
+To make the project look even more production-minded, the next high-value improvements would be:
+
+1. add a pipeline run history table in addition to the current last-date metastore,
+2. make idempotency behavior explicit in the README and code comments,
+3. add stronger tests around ingestion and metastore behavior,
+4. document the dbt models and signal layer more clearly,
+5. review the directory selection logic in the ingestion DAG carefully,
+6. add logging / observability notes and failure-recovery strategy.
 
 ## Disclaimer
 
-This project is for **educational and demonstration purposes only**.  
-It does not constitute financial advice, trading recommendations, or investment guidance.
+This project is for educational and portfolio purposes only.
+It is not investment advice and it is not intended for live trading.
+
+## Author
+
+Łukasz — Python / backend engineer transitioning into Data Engineering.
