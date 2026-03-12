@@ -7,6 +7,17 @@ import re
 from warehouse.snowflake import JARS
 
 
+def get_sfOptions():
+    return {
+        'sfURL': f'{os.environ.get('SNOWFLAKE_ACCOUNT')}.snowflakecomputing.com',
+        'sfUser': os.environ.get('PYSPARK_USER'),
+        'sfRole': 'TRANSFORM',
+        "pem_private_key": get_private_key(),
+        'sfSchema': os.environ.get('SNOWFLAKE_SCHEMA'),
+        'sfDatabase': os.environ.get('SNOWFLAKE_DATABASE'),
+        'sfWarehouse': os.environ.get('SNOWFLAKE_WAREHOUSE'),
+    }
+
 def get_private_key():
     key_path = os.environ.get('PYSPARK_PRIVATE_KEY_FILE')
     with open(key_path, "rb") as key_file:

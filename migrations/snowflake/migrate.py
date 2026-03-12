@@ -3,6 +3,9 @@ from typing import List
 
 import snowflake.connector as sc
 
+from stock_data import METASTORE_SCHEMA
+from stock_data.push_data import METASTORE__LAST_DATA, METASTORE__LAST_DATA_SCHEMA
+
 
 class COLORS:
     RESET = '\033[0m'
@@ -47,6 +50,8 @@ permissions = [
     'GRANT ALL ON FUTURE SCHEMAS IN DATABASE MARKETS TO ROLE TRANSFORM;',
     'GRANT ALL ON ALL TABLES IN SCHEMA RAW TO ROLE TRANSFORM;',
     'GRANT ALL ON FUTURE TABLES IN SCHEMA RAW TO ROLE TRANSFORM;',
+    f'GRANT ALL ON ALL TABLES IN SCHEMA {METASTORE_SCHEMA} TO ROLE TRANSFORM;',
+    f'GRANT ALL ON FUTURE TABLES IN SCHEMA {METASTORE_SCHEMA} TO ROLE TRANSFORM;',
 ]
 
 
@@ -96,6 +101,8 @@ def upgrade() -> None:
         'CREATE SCHEMA IF NOT EXISTS {};'.format(RAW_SCHEMA),
         'CREATE SCHEMA IF NOT EXISTS {};'.format(DEV_SCHEMA),
         'CREATE TABLE IF NOT EXISTS {}.{} ({});'.format(RAW_SCHEMA, TABLE_NAME, TABLE_SCHEMA),
+        'CREATE SCHEMA IF NOT EXISTS {};'.format(METASTORE_SCHEMA),
+        'CREATE TABLE IF NOT EXISTS {} ({});'.format(METASTORE__LAST_DATA, METASTORE__LAST_DATA_SCHEMA),
         *permissions,
     ]
     execute_queries(queries)

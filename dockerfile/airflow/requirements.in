@@ -10,3 +10,5 @@ pandas==2.3.3
 pyspark==4.1.1
 alembic==1.17.2
 snowflake-sqlalchemy==1.8.2
+pytest==9.0.2
+freezegun==1.5.5

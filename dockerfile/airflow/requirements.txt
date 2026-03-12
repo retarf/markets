@@ -94,6 +94,8 @@ executing==2.2.1
     # via stack-data
 filelock==3.20.0
     # via snowflake-connector-python
+freezegun==1.5.5
+    # via -r requirements.in
 greenlet==3.3.0
     # via sqlalchemy
 idna==3.11
@@ -102,6 +104,8 @@ idna==3.11
     #   snowflake-connector-python
 importlib-metadata==8.7.0
     # via dbt-semantic-interfaces
+iniconfig==2.3.0
+    # via pytest
 ipdb==0.13.13
     # via -r requirements.in
 ipython==8.37.0
@@ -174,6 +178,7 @@ packaging==25.0
     # via
     #   build
     #   dbt-core
+    #   pytest
     #   snowflake-connector-python
 pandas==2.3.3
     # via
@@ -193,6 +198,8 @@ pip-tools==7.5.1
     # via -r requirements.in
 platformdirs==4.5.0
     # via snowflake-connector-python
+pluggy==1.6.0
+    # via pytest
 polars==1.35.1
     # via -r requirements.in
 polars-runtime-32==1.35.1
@@ -225,7 +232,9 @@ pydantic==2.12.4
 pydantic-core==2.41.5
     # via pydantic
 pygments==2.19.2
-    # via ipython
+    # via
+    #   ipython
+    #   pytest
 pyjwt==2.10.1
     # via snowflake-connector-python
 pyopenssl==25.3.0
@@ -236,11 +245,14 @@ pyproject-hooks==1.2.0
     #   pip-tools
 pyspark==4.1.1
     # via -r requirements.in
+pytest==9.0.2
+    # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via
     #   botocore
     #   dbt-common
     #   dbt-semantic-interfaces
+    #   freezegun
     #   pandas
     #   snowflake-snowpark-python
 python-slugify==8.0.4
