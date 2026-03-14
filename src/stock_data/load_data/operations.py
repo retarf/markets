@@ -8,8 +8,8 @@ from pyspark.sql.types import StructType, StructField, StringType, DateType, Dou
 
 from warehouse.snowflake.table import load_table, save_table
 from stock_data import spark, Column, PYSPARK_DATE_FORMAT, input_schema, RAW_STOCK_DATA
-from stock_data.push_data import METASTORE__LAST_DATA
-from stock_data.push_data.quality_checks import (
+from stock_data.load_data import METASTORE__LAST_DATA
+from stock_data.load_data.quality_checks import (
     not_null_quality_check,
     greater_than_zero_quality_check,
     low_greater_than_high_quality_check
@@ -24,11 +24,12 @@ def read_csv_to_dataframe(csv_file_path):
     return spark.read.schema(input_schema).option("header", True).option("dateFormat", PYSPARK_DATE_FORMAT).csv(csv_file_path)
 
 
-def get_ticker_from_path(file_path):
-    return Path(file_path).name.split('.')[0].upper()
+def get_ticker_from_path(path):
+    return Path(path).name.split('.')[0].upper()
 
-def get_ds_from_path(file_path):
-    return Path(file_path).parent.name.split('=')[1]
+
+def get_ds_from_path(path):
+    return Path(path).parent.name.split('=')[1]
 
 
 def perform_quality_checks(df) -> DataFrame:
@@ -74,17 +75,4 @@ def add_ticker_column(df, ticker):
 
 def save_last_data_date_in_metastore(last_date_df) -> None:
     save_table(last_date_df, METASTORE__LAST_DATA)
-
-
-def push_stock_data_operation(file_path: str) -> None:
-    ticker = get_ticker_from_path(file_path)
-    ds = get_ds_from_path(file_path)
-    metastore = load_table(spark, METASTORE__LAST_DATA)
-    metastore_last_data_date = get_last_data_date_from_metastore(metastore, ticker, ds)
-    all_data = read_csv_to_dataframe(file_path)
-    recent_data = get_recent_data(all_data, metastore_last_data_date, ds)
-    recent_data = perform_quality_checks(recent_data)
-    current_last_date_dataframe = get_current_last_date_dataframe(recent_data)
-    recent_data = add_ticker_column(recent_data, ticker)
-    save_data(recent_data)
-    save_last_data_date_in_metastore(current_last_date_dataframe)
+    logger.info("Data has been saved to the warehouse.")

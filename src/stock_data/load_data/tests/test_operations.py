@@ -3,8 +3,8 @@ import pytest
 from datetime import date
 
 from stock_data import APP_NAME, spark, input_schema, output_schema
-from stock_data.push_data import metastore__last_data__schema
-from stock_data.push_data.operations import (
+from stock_data.load_data import metastore__last_data__schema
+from stock_data.load_data.operations import (
     get_last_data_date_from_metastore,
     get_recent_data,
     get_current_last_date_dataframe,

@@ -10,120 +10,89 @@ agate==1.9.1
     #   dbt-common
     #   dbt-core
     #   dbt-snowflake
-alembic==1.17.2
-    # via -r requirements.in
 annotated-types==0.7.0
     # via pydantic
 asn1crypto==1.5.1
     # via snowflake-connector-python
-asttokens==3.0.0
-    # via stack-data
 attrs==25.4.0
     # via
     #   jsonschema
     #   referencing
-babel==2.17.0
+babel==2.18.0
     # via agate
-boto3==1.40.69
+boto3==1.42.67
     # via snowflake-connector-python
-botocore==1.40.69
+botocore==1.42.67
     # via
     #   boto3
     #   s3transfer
     #   snowflake-connector-python
-build==1.3.0
-    # via pip-tools
 certifi==2025.1.31
     # via
     #   dbt-snowflake
     #   requests
     #   snowflake-connector-python
-cffi==1.17.1
-    # via
-    #   cryptography
-    #   snowflake-connector-python
-charset-normalizer==3.4.4
+cffi==2.0.0
+    # via cryptography
+charset-normalizer==3.4.5
     # via
     #   requests
     #   snowflake-connector-python
-click==8.3.0
+click==8.3.1
     # via
     #   dbt-core
     #   dbt-semantic-interfaces
-    #   pip-tools
-cloudpickle==3.1.1
-    # via snowflake-snowpark-python
 colorama==0.4.6
     # via dbt-common
-cryptography==46.0.0
+cryptography==46.0.5
     # via
     #   pyopenssl
     #   secretstorage
     #   snowflake-connector-python
 daff==1.4.2
     # via dbt-core
-dbt-adapters==1.19.0
+dbt-adapters==1.22.8
     # via
     #   dbt-core
     #   dbt-snowflake
-dbt-common==1.36.0
+dbt-common==1.37.3
     # via
     #   dbt-adapters
     #   dbt-core
     #   dbt-snowflake
-dbt-core==1.11.0b4
+dbt-core==1.11.7
     # via dbt-snowflake
 dbt-extractor==0.6.0
     # via dbt-core
-dbt-protos==1.0.382
+dbt-protos==1.0.440
     # via
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
 dbt-semantic-interfaces==0.9.0
     # via dbt-core
-dbt-snowflake==1.10.3
+dbt-snowflake==1.11.3
     # via -r requirements.in
-decorator==5.2.1
-    # via
-    #   ipdb
-    #   ipython
 deepdiff==8.6.1
     # via dbt-common
-executing==2.2.1
-    # via stack-data
-filelock==3.20.0
+filelock==3.25.2
     # via snowflake-connector-python
-freezegun==1.5.5
-    # via -r requirements.in
-greenlet==3.3.0
-    # via sqlalchemy
 idna==3.11
     # via
     #   requests
     #   snowflake-connector-python
-importlib-metadata==8.7.0
+importlib-metadata==8.7.1
     # via dbt-semantic-interfaces
-iniconfig==2.3.0
-    # via pytest
-ipdb==0.13.13
-    # via -r requirements.in
-ipython==8.37.0
-    # via
-    #   -r requirements.in
-    #   ipdb
-isodate==0.6.1
+isodate==0.7.2
     # via
     #   agate
     #   dbt-common
 jaraco-classes==3.4.0
     # via keyring
-jaraco-context==6.0.1
+jaraco-context==6.1.1
     # via keyring
-jaraco-functools==4.3.0
+jaraco-functools==4.4.0
     # via keyring
-jedi==0.19.2
-    # via ipython
 jeepney==0.9.0
     # via
     #   keyring
@@ -133,34 +102,28 @@ jinja2==3.1.6
     #   dbt-common
     #   dbt-core
     #   dbt-semantic-interfaces
-jmespath==1.0.1
+jmespath==1.1.0
     # via
     #   boto3
     #   botocore
-jsonschema==4.25.1
+jsonschema==4.26.0
     # via
     #   dbt-common
     #   dbt-core
     #   dbt-semantic-interfaces
 jsonschema-specifications==2025.9.1
     # via jsonschema
-keyring==25.6.0
+keyring==25.7.0
     # via snowflake-connector-python
-leather==0.4.0
+leather==0.4.1
     # via agate
-mako==1.3.10
-    # via alembic
 markupsafe==3.0.3
-    # via
-    #   jinja2
-    #   mako
+    # via jinja2
 mashumaro[msgpack]==3.14
     # via
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
-matplotlib-inline==0.2.1
-    # via ipython
 more-itertools==10.8.0
     # via
     #   dbt-semantic-interfaces
@@ -168,163 +131,92 @@ more-itertools==10.8.0
     #   jaraco-functools
 msgpack==1.1.2
     # via mashumaro
-networkx==3.5
+networkx==3.6.1
     # via dbt-core
-numpy==2.3.5
-    # via pandas
 orderly-set==5.5.0
     # via deepdiff
-packaging==25.0
+packaging==26.0
     # via
-    #   build
     #   dbt-core
-    #   pytest
-    #   snowflake-connector-python
-pandas==2.3.3
-    # via
-    #   -r requirements.in
     #   snowflake-connector-python
 parsedatetime==2.6
     # via agate
-parso==0.8.5
-    # via jedi
 pathspec==0.12.1
     # via
     #   dbt-common
     #   dbt-core
-pexpect==4.9.0
-    # via ipython
-pip-tools==7.5.1
-    # via -r requirements.in
-platformdirs==4.5.0
+platformdirs==4.9.4
     # via snowflake-connector-python
-pluggy==1.6.0
-    # via pytest
-polars==1.35.1
-    # via -r requirements.in
-polars-runtime-32==1.35.1
-    # via polars
-prompt-toolkit==3.0.52
-    # via ipython
-protobuf==6.31.1
+protobuf==6.33.5
     # via
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
     #   dbt-protos
-    #   snowflake-snowpark-python
-ptyprocess==0.7.0
-    # via pexpect
-pure-eval==0.2.3
-    # via stack-data
-py4j==0.10.9.7
-    # via pyspark
-pyarrow==22.0.0
-    # via
-    #   -r requirements.in
-    #   snowflake-connector-python
-pycparser==2.23
+pycparser==3.0
     # via cffi
-pydantic==2.12.4
+pydantic==2.12.5
     # via
     #   dbt-core
     #   dbt-semantic-interfaces
 pydantic-core==2.41.5
     # via pydantic
-pygments==2.19.2
-    # via
-    #   ipython
-    #   pytest
-pyjwt==2.10.1
+pyjwt==2.12.0
     # via snowflake-connector-python
 pyopenssl==25.3.0
     # via snowflake-connector-python
-pyproject-hooks==1.2.0
-    # via
-    #   build
-    #   pip-tools
-pyspark==4.1.1
-    # via -r requirements.in
-pytest==9.0.2
-    # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via
     #   botocore
     #   dbt-common
     #   dbt-semantic-interfaces
-    #   freezegun
-    #   pandas
-    #   snowflake-snowpark-python
 python-slugify==8.0.4
     # via agate
 pytimeparse==1.1.8
     # via agate
-pytz==2025.2
+pytz==2026.1.post1
     # via
     #   dbt-adapters
     #   dbt-core
-    #   pandas
     #   snowflake-connector-python
 pyyaml==6.0.3
     # via
     #   dbt-core
     #   dbt-semantic-interfaces
-    #   snowflake-snowpark-python
 referencing==0.37.0
     # via
     #   jsonschema
     #   jsonschema-specifications
 requests==2.32.5
     # via
-    #   -r requirements.in
     #   dbt-common
     #   dbt-core
     #   snowflake-connector-python
     #   snowplow-tracker
-rpds-py==0.28.0
+rpds-py==0.30.0
     # via
     #   jsonschema
     #   referencing
-s3transfer==0.14.0
+s3transfer==0.16.0
     # via boto3
-secretstorage==3.4.0
+secretstorage==3.5.0
     # via keyring
 six==1.17.0
-    # via
-    #   isodate
-    #   python-dateutil
-snowflake-connector-python[pandas,secure-local-storage]==3.18.0
-    # via
-    #   dbt-snowflake
-    #   snowflake-snowpark-python
-    #   snowflake-sqlalchemy
-snowflake-snowpark-python[pandas]==1.43.0
-    # via -r requirements.in
-snowflake-sqlalchemy==1.8.2
-    # via -r requirements.in
+    # via python-dateutil
+snowflake-connector-python[secure-local-storage]==4.3.0
+    # via dbt-snowflake
 snowplow-tracker==1.1.0
     # via dbt-core
 sortedcontainers==2.4.0
     # via snowflake-connector-python
-sqlalchemy==2.0.45
-    # via
-    #   alembic
-    #   snowflake-sqlalchemy
-sqlparse==0.5.3
+sqlparse==0.5.4
     # via dbt-core
-stack-data==0.6.3
-    # via ipython
 text-unidecode==1.3
     # via python-slugify
-tomlkit==0.13.3
+tomlkit==0.14.0
     # via snowflake-connector-python
-traitlets==5.14.3
-    # via
-    #   ipython
-    #   matplotlib-inline
 typing-extensions==4.15.0
     # via
-    #   alembic
     #   dbt-adapters
     #   dbt-common
     #   dbt-core
@@ -333,29 +225,13 @@ typing-extensions==4.15.0
     #   pydantic
     #   pydantic-core
     #   snowflake-connector-python
-    #   snowflake-snowpark-python
     #   snowplow-tracker
-    #   sqlalchemy
     #   typing-inspection
 typing-inspection==0.4.2
     # via pydantic
-tzdata==2025.3
-    # via pandas
-tzlocal==5.3.1
-    # via snowflake-snowpark-python
-urllib3==2.5.0
+urllib3==2.6.3
     # via
     #   botocore
     #   requests
-wcwidth==0.2.14
-    # via prompt-toolkit
-wheel==0.45.1
-    # via
-    #   pip-tools
-    #   snowflake-snowpark-python
 zipp==3.23.0
     # via importlib-metadata
-
-# The following packages are considered to be unsafe in a requirements file:
-# pip
-# setuptools
