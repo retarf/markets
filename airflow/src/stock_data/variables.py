@@ -1,0 +1,17 @@
+import os
+
+
+variables = {
+    "PYTHONPATH": "/project/src",
+    "ENVIRONMENT": os.environ["ENVIRONMENT"],
+    "HOST_PROJECT_DIR": os.environ["HOST_PROJECT_DIR"],
+    "DATA_SOURCE_URI": os.environ["DATA_SOURCE_URI"],
+    "SNOWFLAKE_ACCOUNT": os.environ["SNOWFLAKE_ACCOUNT"],
+    "SNOWFLAKE_WAREHOUSE": os.environ["SNOWFLAKE_WAREHOUSE"],
+    "SNOWFLAKE_DATABASE": os.environ["SNOWFLAKE_DATABASE"],
+    "SNOWFLAKE_SCHEMA": os.environ["SNOWFLAKE_SCHEMA"],
+    "PYSPARK_USER": os.environ["PYSPARK_USER"],
+    "PYSPARK_PRIVATE_KEY_FILE": os.environ["PYSPARK_PRIVATE_KEY_FILE"],
+    "PYSPARK_PUBLIC_KEY_FILE": os.environ["PYSPARK_PUBLIC_KEY_FILE"],
+    "PYSPARK_PRIVATE_KEY_FILE_PWD": os.environ["PYSPARK_PRIVATE_KEY_FILE_PWD"] 
+}

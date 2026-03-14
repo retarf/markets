@@ -4,10 +4,10 @@ from pyspark.sql.types import StructType, StructField, DateType, DoubleType, Str
 from warehouse.snowflake.session import get_spark_session
 
 
-APP_NAME = "STOCK_DATA_APP"
+APP_NAME = "STOCK_DATA"
 SCHEMA = f"MARKETS.{os.environ.get("ENVIRONMENT")}"
 METASTORE_SCHEMA = f"MARKETS.{os.environ.get("ENVIRONMENT")}_METASTORE"
-DATA_DIR = f"/project/datalake/{APP_NAME}"
+DATALAKE = f"/project/datalake/{APP_NAME}"
 PYSPARK_DATE_FORMAT = "yyyy-MM-dd"
 RAW_STOCK_DATA = "MARKETS.RAW.RAW_STOCK_DATA"
 DATE_FORMAT = "%Y-%m-%d"
@@ -21,6 +21,8 @@ class Column:
     low = "LOW"
     close = "CLOSE"
     volume = "VOLUME"
+    source_path = "SOURCE_PATH"
+    load_ts = "LOAD_TS"
 
 
 input_schema = StructType(
@@ -43,7 +45,8 @@ output_schema = StructType(
         StructField(Column.high, DoubleType(), True),
         StructField(Column.low, DoubleType(), True),
         StructField(Column.close, DoubleType(), True),
-        StructField(Column.volume, DoubleType(), True)
+        StructField(Column.volume, DoubleType(), True),
+        StructField(Column.source_path, StringType(), True)
     ]
 )
 

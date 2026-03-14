@@ -1,0 +1,1 @@
+TICKER_LIST = ["xtb", "ORL", "PZU"]

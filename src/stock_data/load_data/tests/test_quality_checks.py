@@ -5,7 +5,7 @@ from datetime import date
 from warehouse.snowflake.session import get_spark_session
 
 from stock_data import APP_NAME, schema, spark
-from stock_data.push_data.quality_checks import (
+from stock_data.load_data.quality_checks import (
     QualityError, 
     not_null_quality_check,
     greater_than_zero_quality_check,

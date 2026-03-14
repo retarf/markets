@@ -10,7 +10,7 @@ from stock_data import APP_NAME, Column
 
 
 METASTORE_SCHEMA = "METASTORE"
-LAST_DATA_DATE_TABLE = "LAST_DATA_DATE_TABLE"
+LAST_DATA_DATE_TABLE = "LAST_TRADING_DATE_TABLE"
 TABLE_PATH = f"MARKETS.{METASTORE_SCHEMA}.{LAST_DATA_DATE_TABLE}"
 
 
@@ -25,11 +25,11 @@ schema = StructType(
 )
 
 
-def save_last_trading_date(ticker: str, last_date: date) -> None:
+def save_last_trading_date(ticker: str, last_trading_date: date) -> None:
     '''
-        Saves last trading date for given ticker in metastore.
+        Saves the last trading date for given ticker in metastore.
     '''
-    last_date_df = spark.createDataFrame([(ticker, last_date)], schema)
+    last_date_df = spark.createDataFrame([(ticker, last_trading_date)], schema)
     #TODO: MARKETS db should be replaced by {APP_NAME}
     save_table(last_date_df, table_name=TABLE_PATH)
 

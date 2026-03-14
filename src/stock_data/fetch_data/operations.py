@@ -5,7 +5,7 @@ import pathlib
 import requests
 import logging
 
-from stock_data import DATA_DIR
+from stock_data import DATALAKE
 
 
 TICKER_LIST = ['xtb', "orl"]
@@ -33,19 +33,14 @@ def fetch_data(ticker):
 
 
 def create_dated_directory(date_string: str) -> pathlib.Path:
-    custom_path = f"{DATA_DIR}/dt={date_string}"
+    custom_path = f"{DATALAKE}/dt={date_string}"
     path = pathlib.Path(custom_path)
     path.mkdir(parents=True, exist_ok=True)
     return path
 
 
 def save_data(dated_directory, ticker, data):
-    pathlib.Path(dated_directory / f"{ticker.lower()}.csv").write_bytes(data)
+    path = pathlib.Path(dated_directory / f"{ticker.lower()}.csv")
+    path.write_bytes(data)
+    logger.info(f"Data has been wrote to {str(path)}")
 
-
-def fetch_stock_data_operation(ticker, date_string):
-    data = fetch_data(ticker)
-    validate_data(ticker, data)
-    dated_directory = create_dated_directory(date_string)
-    save_data(dated_directory, ticker, data)
-    logger.info(f"Data has been downloaded for the ticker {ticker.upper()} for date: {date_string}")
