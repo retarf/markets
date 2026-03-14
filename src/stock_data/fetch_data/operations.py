@@ -5,7 +5,7 @@ import pathlib
 import requests
 import logging
 
-from stock_data import DATA_DIR
+from src.stock_data import DATA_DIR
 
 
 TICKER_LIST = ['xtb', "orl"]

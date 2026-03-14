@@ -7,7 +7,7 @@ from warehouse.snowflake.session import get_spark_session
 APP_NAME = "STOCK_DATA_APP"
 SCHEMA = f"MARKETS.{os.environ.get("ENVIRONMENT")}"
 METASTORE_SCHEMA = f"MARKETS.{os.environ.get("ENVIRONMENT")}_METASTORE"
-DATA_DIR = f"/project/datalake/{APP_NAME}"
+DATALAKE = f"/project/datalake/{APP_NAME}"
 PYSPARK_DATE_FORMAT = "yyyy-MM-dd"
 RAW_STOCK_DATA = "MARKETS.RAW.RAW_STOCK_DATA"
 DATE_FORMAT = "%Y-%m-%d"

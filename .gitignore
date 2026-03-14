@@ -2,4 +2,5 @@
 .idea
 datalake
 .python-version
-.dev
+dev
+__pycache__

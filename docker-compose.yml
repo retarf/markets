@@ -2,43 +2,55 @@ name: markets
 
 services:
     airflow:
+        image: apache/airflow:3.1.8
+        environment:
+          PYTHONPATH: /project/airflow/src
+        env_file:
+          - .env
+        user: ${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-0}
+        group_add:
+          - "${DOCKER_GID}"
+        volumes:
+            - ./airflow:/project/airflow
+            - /var/run/docker.sock:/var/run/docker.sock
+            #- ./datalake:/project/datalake
+            - ./images:/images
+        ports:
+            - "8080:8080"
+        command: standalone
+
+    pyspark:
         build:
           context: .
-          dockerfile: dockerfile/airflow/Dockerfile
-        depends_on: 
-            - db
+          dockerfile: images/pyspark/Dockerfile
         environment:
           PYTHONPATH: /project/airflow:/project/airflow/src:/project/src
         env_file:
           - .env
         volumes:
+            - ./airflow:/project/airflow
+            - /var/run/docker.sock:/var/run/docker.sock
             - ./datalake:/project/datalake
             - ./migrations:/project/migrations
-            - ./dockerfile:/project/dockerfile
-            - ./airflow:/project/airflow
-            - ./dbt:/project/dbt
             - ./src:/project/src
-            - ${DOCKER_HOME_DIR:-./.dev/home}:/home/airflow
+            - ${DOCKER_HOME_DIR:-./dev/home}:/home/airflow
         ports:
-            - "8080:8080"
             - "7070:7070"
         stdin_open: true
         tty: true
-        command: bash -c "airflow standalone"
+        command: bash
         user: ${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-0}
-    db:
-        image: postgres
-        environment:
-            POSTGRES_USER: ${DB_USER}
-            POSTGRES_PASSWORD: ${DB_PASSWORD}
-            POSTGRES_DB: ${DB_NAME}
-        ports:
-          - 5432:5432
+
+    dbt:
+        build:
+          context: .
+          dockerfile: images/dbt/Dockerfile
+        env_file:
+          - .env
         volumes:
-            - db:/var/lib/postgresql/data
-            - ./datalake:/datalake
-
-
-volumes:
-    db:
-    airflow:
+            - ./dbt:/project/dbt
+            - ${DOCKER_HOME_DIR:-./dev/home}:/home/airflow
+        stdin_open: true
+        tty: true
+        command: bash
+        user: ${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-0}

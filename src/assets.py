@@ -1,4 +1,4 @@
-from airflow.sdk import Asset
+from airflow.sdk import AssetAlias
 
 
-datalake_asset = Asset("file://project/datalake")
+stock_data_fetched = AssetAlias("stock_data_fetched")

@@ -1,10 +1,14 @@
 import datetime
 
-from airflow.sdk import dag, task, get_current_context
+from pathlib import Path
 
-from assets import datalake_asset
+from airflow.sdk import dag, task, get_current_context, Asset
+
+from airflow.src.stock_data.assets import data_fetched
+from stock_data import DATALAKE
 from stock_data.fetch_data.operations import fetch_stock_data_operation
 from stock_data.fetch_data import TICKER_LIST
+
 
 
 @dag(
@@ -12,21 +16,18 @@ from stock_data.fetch_data import TICKER_LIST
     schedule="@daily",
     catchup=False,
 )
-def fetch_stock_data_dag():
+def fetch_data_dag():
 
-    @task
-    def fetch_stock_data_task(ticker: str):
-        ctx = get_current_context()
-        ds = ctx["ds"]
+    @task(
+            outlets=[data_fetched]
+    )
+    def fetch_stock_data_task(ticker: str, outlet_events):
+        ds = get_current_context()["ds"]
         fetch_stock_data_operation(ticker, ds)
-    
-    @task(outlets=[datalake_asset])
-    def mark_done():
-        return "done"
-    
-    fetched = fetch_stock_data_task.expand(ticker=TICKER_LIST)
-    done = mark_done()
+        path = f'{DATALAKE}/dt={{ ds }}/{ticker}.csv'
+        outlet_events[data_fetched].add(Asset(path))
 
-    fetched >> done
+    fetch_stock_data_task.expand(ticker=TICKER_LIST)
+
 
 dag = fetch_stock_data_dag()
