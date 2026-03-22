@@ -4,7 +4,7 @@ from pyspark.sql.types import StructType, StructField, DateType, DoubleType, Str
 from warehouse.snowflake.session import get_spark_session
 
 
-APP_NAME = "STOCK_DATA_APP"
+APP_NAME = "STOCK_DATA"
 SCHEMA = f"MARKETS.{os.environ.get("ENVIRONMENT")}"
 METASTORE_SCHEMA = f"MARKETS.{os.environ.get("ENVIRONMENT")}_METASTORE"
 DATALAKE = f"/project/datalake/{APP_NAME}"

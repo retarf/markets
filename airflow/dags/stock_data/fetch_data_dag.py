@@ -1,14 +1,31 @@
+import logging
 import datetime
 
 from pathlib import Path
 
+from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.sdk import dag, task, get_current_context, Asset
 
-from airflow.src.stock_data.assets import data_fetched
-from stock_data import DATALAKE
-from stock_data.fetch_data.operations import fetch_stock_data_operation
-from stock_data.fetch_data import TICKER_LIST
+from stock_data.assets import data_fetched
+from stock_data.operators import PysparkOperator
 
+TICKER_LIST = ["xtb", "orl", "pzu"]
+# TICKER_LIST = ["orl"]
+
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+
+def attach_asset(context, _):
+    ticker = context["params"]["ticker"]
+    ds = context["ds"]
+
+    context["outlet_events"][data_fetched].add(
+        Asset(f"file:///project/datalake/dt={ds}/{ticker}.csv")
+    )
+    logger.warning(context)
+    
 
 
 @dag(
@@ -18,16 +35,16 @@ from stock_data.fetch_data import TICKER_LIST
 )
 def fetch_data_dag():
 
-    @task(
-            outlets=[data_fetched]
+    fetch_data_run = PysparkOperator.partial(
+        task_id="fetch_data",
+        command="python /project/src/stock_data/fetch_data/run.py --date {{ ds }} --ticker {{ params.ticker }}",
+        outlets=[data_fetched],
+        post_execute=attach_asset,
+    ).expand(
+        params=[{"ticker": ticker} for ticker in TICKER_LIST]
     )
-    def fetch_stock_data_task(ticker: str, outlet_events):
-        ds = get_current_context()["ds"]
-        fetch_stock_data_operation(ticker, ds)
-        path = f'{DATALAKE}/dt={{ ds }}/{ticker}.csv'
-        outlet_events[data_fetched].add(Asset(path))
 
-    fetch_stock_data_task.expand(ticker=TICKER_LIST)
+    fetch_data_run
 
 
-dag = fetch_stock_data_dag()
+dag = fetch_data_dag()

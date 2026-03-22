@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import logging
 
 import click
@@ -8,7 +9,12 @@ from stock_data import spark
 from stock_data.load_data import METASTORE__LAST_DATA
 
 
-logger = logging.getLogger()
+logging.basicConfig(
+    level=logging.INFO,
+    stream=sys.stdout,
+    format="%(asctime)s %(levelname)s %(message)s",
+)
+logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
@@ -30,6 +36,7 @@ from operations import (
 @click.command()
 @click.option("--path", help="path to a data file")
 def run(path: str) -> None:
+    logger.info(f"Starting to load data from path {path} to snowflake")
     ticker = get_ticker_from_path(path)
     ds = get_ds_from_path(path)
     metastore = load_table(spark, METASTORE__LAST_DATA)

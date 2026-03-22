@@ -7,5 +7,3 @@ DATE_FORMAT = "%Y%m%d"
 
 
 
-
-TICKER_LIST = ["xtb", "ORL"]

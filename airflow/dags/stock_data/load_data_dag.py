@@ -1,33 +1,55 @@
+import logging
+
 from datetime import datetime
 
-from airflow.providers.docker.operators.docker import DockerOperator
-from airflow.sdk import dag
+from airflow.utils.log.logging_mixin import LoggingMixin
+from airflow.sdk import dag, task, get_current_context
 
 from stock_data.assets import data_fetched
-from stock_data.mounts import src, datalake, env
-from stock_data.variables import variables
+from stock_data.operators import PysparkOperator
+
+
+logger = logging.getLogger()
+# logger.setLevel(logging.INFO)
+
+
+
+# @task
+# def get_path_from_event():
+#     context = get_current_context()
+#     logger.warning(context)
+#     events = context['triggering_asset_events'][data_fetched]
+#     logger.warning(events)
+#     return events[-1].uri.replace("file://", "")
 
 
 @dag(
     schedule=[data_fetched],
     start_date=datetime(2026, 1, 1),
-    catchup=True
+    catchup=False
 )
 def load_data_dag():
-    pyspark_run = DockerOperator(
+
+    # asset_path = "{{ (triggering_asset_events[data_fetched] | first).uri }}"
+    #asset_path = "{{ (triggering_asset_events.values() | first).uri }}"
+
+    @task(inlets=[data_fetched])
+    def get_path(*, inlet_events):
+        # ctx = get_current_context()
+        uri = inlet_events[-1][0].asset.uri
+        # ctx["params"]["path"] = uri.replace("file://", "")
+        return uri.replace("file://", "")
+
+    path_arg = get_path()
+
+    load_data_run = PysparkOperator(
         task_id="load_data",
-        image="markets-pyspark:latest",
-        command="python /project/src/stock_data/load_data/run.py --path /project/datalake/STOCK_DATA_APP/dt=2026-03-12/xtb.csv",
-        # command="ls -la /datalake/", # STOCK_DATA_APP/dt=2026-03-12",
-        docker_url="unix://var/run/docker.sock",
-        environment=variables,
-        mounts=[src, datalake],
-        #env_file="/project/.env",
-        mount_tmp_dir=False,
-        auto_remove="success"
+        # command=f"python /project/src/stock_data/load_data/run.py --path {{ params.path }}",
+        #command=f"python /project/src/stock_data/load_data/run.py --path {{ ti.xcom_pull(task_ids='get_path') }}",
+        command=f"python /project/src/stock_data/load_data/run.py --path {{ tasks.get_path.output }}",
     )
 
-    pyspark_run
+    path_arg >> load_data_run
     
     
 dag = load_data_dag()
