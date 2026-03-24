@@ -20,12 +20,9 @@ logger.setLevel(logging.INFO)
 def attach_asset(context, _):
     ticker = context["params"]["ticker"]
     ds = context["ds"]
-
     context["outlet_events"][data_fetched].add(
-        Asset(f"file:///project/datalake/dt={ds}/{ticker}.csv")
+        Asset(f"file:///project/datalake/STOCK_DATA/dt={ds}/{ticker}.csv")
     )
-    logger.warning(context)
-    
 
 
 @dag(

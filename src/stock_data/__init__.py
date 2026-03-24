@@ -21,6 +21,8 @@ class Column:
     low = "LOW"
     close = "CLOSE"
     volume = "VOLUME"
+    source_path = "SOURCE_PATH"
+    load_ts = "LOAD_TS"
 
 
 input_schema = StructType(
@@ -43,7 +45,8 @@ output_schema = StructType(
         StructField(Column.high, DoubleType(), True),
         StructField(Column.low, DoubleType(), True),
         StructField(Column.close, DoubleType(), True),
-        StructField(Column.volume, DoubleType(), True)
+        StructField(Column.volume, DoubleType(), True),
+        StructField(Column.source_path, StringType(), True)
     ]
 )
 

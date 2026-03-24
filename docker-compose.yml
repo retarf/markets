@@ -34,6 +34,7 @@ services:
             - ./datalake:/project/datalake
             - ./migrations:/project/migrations
             - ./src:/project/src
+            - ./dbt:/project/dbt
             - ${DOCKER_HOME_DIR:-./dev/home}:/home/airflow
         ports:
             - "7070:7070"

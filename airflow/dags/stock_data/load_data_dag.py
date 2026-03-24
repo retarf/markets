@@ -10,17 +10,7 @@ from stock_data.operators import PysparkOperator
 
 
 logger = logging.getLogger()
-# logger.setLevel(logging.INFO)
-
-
-
-# @task
-# def get_path_from_event():
-#     context = get_current_context()
-#     logger.warning(context)
-#     events = context['triggering_asset_events'][data_fetched]
-#     logger.warning(events)
-#     return events[-1].uri.replace("file://", "")
+logger.setLevel(logging.INFO)
 
 
 @dag(
@@ -30,26 +20,21 @@ logger = logging.getLogger()
 )
 def load_data_dag():
 
-    # asset_path = "{{ (triggering_asset_events[data_fetched] | first).uri }}"
-    #asset_path = "{{ (triggering_asset_events.values() | first).uri }}"
 
     @task(inlets=[data_fetched])
     def get_path(*, inlet_events):
-        # ctx = get_current_context()
-        uri = inlet_events[-1][0].asset.uri
-        # ctx["params"]["path"] = uri.replace("file://", "")
+        events = inlet_events[data_fetched]
+        uri = events[-1].asset.uri
         return uri.replace("file://", "")
 
-    path_arg = get_path()
+    file_path = get_path()
 
     load_data_run = PysparkOperator(
         task_id="load_data",
-        # command=f"python /project/src/stock_data/load_data/run.py --path {{ params.path }}",
-        #command=f"python /project/src/stock_data/load_data/run.py --path {{ ti.xcom_pull(task_ids='get_path') }}",
-        command=f"python /project/src/stock_data/load_data/run.py --path {{ tasks.get_path.output }}",
+        command=f"python /project/src/stock_data/load_data/run.py --path { file_path }",
     )
 
-    path_arg >> load_data_run
+    file_path >> load_data_run
     
     
 dag = load_data_dag()

@@ -4,7 +4,7 @@ from typing import List
 import snowflake.connector as sc
 
 from stock_data import METASTORE_SCHEMA
-from stock_data.push_data import METASTORE__LAST_DATA, METASTORE__LAST_DATA_SCHEMA
+from stock_data.load_data import METASTORE__LAST_DATA, METASTORE__LAST_DATA_SCHEMA
 
 
 class COLORS:
@@ -33,7 +33,7 @@ TABLE_SCHEMA = '''
     LOW DOUBLE PRECISION,
     CLOSE DOUBLE PRECISION, 
     VOLUME DOUBLE PRECISION, 
-    SOURCE_FILE VARCHAR(18), 
+    SOURCE_PATH VARCHAR(80), 
     LOAD_TS TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
 '''
 
