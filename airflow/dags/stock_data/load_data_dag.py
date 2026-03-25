@@ -21,7 +21,7 @@ logger.setLevel(logging.INFO)
 def load_data_dag():
 
 
-    @task(inlets=[data_fetched])
+    @task(inlets=[data_fetched], task_id="get_path")
     def get_path(*, inlet_events):
         events = inlet_events[data_fetched]
         uri = events[-1].asset.uri
@@ -31,7 +31,7 @@ def load_data_dag():
 
     load_data_run = PysparkOperator(
         task_id="load_data",
-        command=f"python /project/src/stock_data/load_data/run.py --path { file_path }",
+        command="python /project/src/stock_data/load_data/run.py --path {{ ti.xcom_pull(task_ids='get_path') }}",
     )
 
     file_path >> load_data_run
