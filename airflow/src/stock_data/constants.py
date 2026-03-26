@@ -1,1 +1,1 @@
-TICKER_LIST = ["xtb", "ORL", "PZU"]
+TICKER_LIST = ["xtb", "orl", "pzu"]
