@@ -18,10 +18,10 @@ with
             low,
             close,
             volume,
-            source_file,
+            source_path,
             load_ts
         from src
-        qualify row_number() over (partition by ticker, trading_date order by load_ts desc, source_file desc) = 1
+        qualify row_number() over (partition by ticker, trading_date order by load_ts desc, source_path desc) = 1
     )
 
 select * from dedup
