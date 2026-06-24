@@ -4,15 +4,12 @@ import logging
 import click
 
 from stock_data.fetch_data.operations import (
-    validate_data, 
-    fetch_data, 
-    create_dated_directory, 
-    save_data, 
+    validate_data,
+    fetch_data,
+    build_csv,
+    create_dated_directory,
+    save_data,
 )
-
-
-TICKER_LIST = ['xtb', "orl"]
-NO_DATA_ROW = b"Brak danych"
 
 
 logging.basicConfig(
@@ -29,8 +26,9 @@ logger.setLevel(logging.INFO)
 @click.option("--ticker", help="Stock ticker.")
 def run(date: str, ticker: str) -> None:
     logger.info(f"Starting fetch data operation for date {date} ticker {ticker}")
-    data = fetch_data(ticker)
-    validate_data(ticker, data)
+    payload = fetch_data(ticker)
+    validate_data(ticker, payload)
+    data = build_csv(payload)
     dated_directory = create_dated_directory(date)
     save_data(dated_directory, ticker, data)
     logger.info(f"Data has been downloaded for the ticker {ticker.upper()} for date: {date}")

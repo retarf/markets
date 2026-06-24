@@ -7,9 +7,6 @@ from stock_data.operators import PysparkOperator
 from stock_data.constants import TICKER_LIST
 
 
-#TICKER_LIST = ["xtb", "orl", "pzu"]
-
-
 @dag(
     start_date=datetime.datetime(2026, 3, 5),
     schedule="@daily",

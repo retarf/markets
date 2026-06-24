@@ -2,13 +2,15 @@ import pytest
 
 from datetime import date
 
-from stock_data import APP_NAME, spark, input_schema, output_schema
+from stock_data import Column, spark, input_schema
 from stock_data.load_data import metastore__last_data__schema
 from stock_data.load_data.operations import (
     get_last_data_date_from_metastore,
-    get_recent_data,
+    select_incremental_data,
     get_current_last_date_dataframe,
-    add_ticker_column
+    add_ticker_column,
+    get_ticker_from_path,
+    get_ds_from_path,
 )
 
 
@@ -60,7 +62,7 @@ def test__get_last_data_date__with_backfil_should_returns_appropriate_result(tes
     assert metastore_last_date == result
 
 
-def test__get_recent_data__should_returns_appropriate_result():
+def test__select_incremental_data__returns_rows_strictly_between_dates():
     test_data = [
         (date(2021, 1, 1), 2.0, 3.0, 2.0, 3.0, 5.0),
         (date(2021, 1, 2), 3.0, 4.0, 3.0, 4.0, 5.0),
@@ -78,9 +80,21 @@ def test__get_recent_data__should_returns_appropriate_result():
     last_data_date = date(2021, 1, 3)
     ds = "2021-01-06"
 
-    df = get_recent_data(test_df, last_data_date, ds)
+    df = select_incremental_data(test_df, last_data_date, ds)
 
     assert df.collect() == expected_df.collect()
+
+
+def test__select_incremental_data__without_start_date_returns_all():
+    test_data = [
+        (date(2021, 1, 1), 2.0, 3.0, 2.0, 3.0, 5.0),
+        (date(2021, 1, 2), 3.0, 4.0, 3.0, 4.0, 5.0),
+    ]
+    test_df = spark.createDataFrame(test_data, input_schema)
+
+    df = select_incremental_data(test_df, None, "2021-01-06")
+
+    assert df.collect() == test_df.collect()
 
 
 def test__get_current_last_date_dataframe__returns_last_date():
@@ -92,12 +106,15 @@ def test__get_current_last_date_dataframe__returns_last_date():
         (date(2021, 1, 5), 6.0, 7.0, 6.0, 7.0, 5.0),
         (date(2021, 1, 6), 7.0, 8.0, 7.0, 8.0, 5.0),
     ]
-    test_df = spark.createDataFrame(test_data, input_schema)
-    expected_df = spark.createDataFrame([{"TRADING_DATE": date(2021, 1, 6)}])
+    # get_current_last_date_dataframe selects TICKER + TRADING_DATE, so the
+    # input needs a ticker column.
+    test_df = add_ticker_column(spark.createDataFrame(test_data, input_schema), "TST")
 
     result_df = get_current_last_date_dataframe(test_df)
 
-    assert expected_df.first() == result_df.first()
+    result = result_df.first()
+    assert result[Column.ticker] == "TST"
+    assert result[Column.date] == date(2021, 1, 6)
 
 
 def test__add_ticker_column__returns_appropriate_df():
@@ -109,17 +126,28 @@ def test__add_ticker_column__returns_appropriate_df():
         (date(2021, 1, 5), 6.0, 7.0, 6.0, 7.0, 5.0),
         (date(2021, 1, 6), 7.0, 8.0, 7.0, 8.0, 5.0),
     ]
-    expected_data = [
-        ("TST", date(2021, 1, 1), 2.0, 3.0, 2.0, 3.0, 5.0),
-        ("TST", date(2021, 1, 2), 3.0, 4.0, 3.0, 4.0, 5.0),
-        ("TST", date(2021, 1, 3), 4.0, 5.0, 4.0, 5.0, 5.0),
-        ("TST", date(2021, 1, 4), 5.0, 6.0, 5.0, 6.0, 5.0),
-        ("TST", date(2021, 1, 5), 6.0, 7.0, 6.0, 7.0, 5.0),
-        ("TST", date(2021, 1, 6), 7.0, 8.0, 7.0, 8.0, 5.0),
-    ]
     test_df = spark.createDataFrame(test_data, input_schema)
-    expected_df = spark.createDataFrame(expected_data, output_schema)
 
     result_df = add_ticker_column(test_df, "TST")
 
-    assert expected_df.collect() == result_df.collect()
+    assert Column.ticker in result_df.columns
+    assert result_df.count() == len(test_data)
+    assert [row[Column.ticker] for row in result_df.collect()] == ["TST"] * len(test_data)
+
+
+@pytest.mark.parametrize(
+    "path,expected",
+    [
+        ("/project/datalake/STOCK_DATA/dt=2026-06-24/XTB.WA.csv", "XTB.WA"),
+        ("/project/datalake/STOCK_DATA/dt=2026-06-24/PKN.WA.csv", "PKN.WA"),
+        ("/project/datalake/STOCK_DATA/dt=2026-06-24/xtb.wa.csv", "XTB.WA"),
+    ],
+)
+def test__get_ticker_from_path__preserves_market_suffix(path, expected):
+    assert get_ticker_from_path(path) == expected
+
+
+def test__get_ds_from_path__extracts_partition_date():
+    path = "/project/datalake/STOCK_DATA/dt=2026-06-24/XTB.WA.csv"
+
+    assert get_ds_from_path(path) == "2026-06-24"
