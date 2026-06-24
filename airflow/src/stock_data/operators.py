@@ -4,7 +4,6 @@ from stock_data.variables import variables
 from stock_data.mounts import src, datalake
 
 
-
 class PysparkOperator(DockerOperator):
 
     def __init__(self, task_id: str, command: str, **kwargs):
