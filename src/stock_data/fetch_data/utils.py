@@ -6,7 +6,7 @@ from airflow.src.constants import DATE_FORMAT, CSV
 
 
 def get_ticker_from_file_name(file_name):
-    return file_name.split(".")[0].split("_")[-1].upper()
+    return file_name.rsplit(".", 1)[0].split("_")[-1].upper()
 
 
 def get_file_list(directory, extension):

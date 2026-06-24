@@ -26,7 +26,7 @@ def extract_all_data_from_csv(csv_file_path):
 
 
 def get_ticker_from_path(path):
-    return Path(path).name.split('.')[0].upper()
+    return Path(path).stem.upper()
 
 
 def get_ds_from_path(path):

@@ -2,15 +2,16 @@ import pytest
 
 from datetime import date
 
-from warehouse.snowflake.session import get_spark_session
-
-from stock_data import APP_NAME, schema, spark
+from stock_data import APP_NAME, input_schema as schema, spark
 from stock_data.load_data.quality_checks import (
-    QualityError, 
+    QualityError,
     not_null_quality_check,
     greater_than_zero_quality_check,
     low_greater_than_high_quality_check
 )
+
+
+VALID_ROW = [(date(2021, 1, 1), 2.0, 3.0, 2.0, 3.0, 5.0)]
 
 
 @pytest.mark.parametrize(
@@ -56,3 +57,16 @@ def test__low_grater_then_high_quality_check__with_low_greater_than_high_raise_e
     df = spark.createDataFrame(test_data, schema)
     with pytest.raises(QualityError, match=f"{APP_NAME}: Low greater than high quality check failed"):
         low_greater_than_high_quality_check(df)
+
+
+@pytest.mark.parametrize(
+    "check",
+    [
+        not_null_quality_check,
+        greater_than_zero_quality_check,
+        low_greater_than_high_quality_check,
+    ],
+)
+def test__quality_check__with_valid_data_does_not_raise(check):
+    df = spark.createDataFrame(VALID_ROW, schema)
+    check(df)
