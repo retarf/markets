@@ -51,7 +51,7 @@ sources:
             data_tests:
               - not_null
 
-          - name: source_file
+          - name: source_path
             description: Source file or batch identifier
             data_tests:
               - not_null
