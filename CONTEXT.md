@@ -1,9 +1,10 @@
 # Markets
 
-Domain language for the market-data pipeline that ingests stock prices and
-derives trading signals. First market is Polish (GPW); the design intentionally
-leaves room for foreign markets. This file is a glossary only — no
-implementation details.
+Domain language for the market-data pipeline that ingests market data and
+derives trading signals. The first asset class is equities (first market Polish,
+GPW); a second asset class, US Treasury yields, is being added. The design
+intentionally leaves room for more markets and asset classes. This file is a
+glossary only — no implementation details.
 
 ## Language
 
@@ -17,10 +18,38 @@ _Avoid_: code, instrument id. Note the GPW-native code (`PKN`) is **not** the
 Ticker on its own — the market suffix (`.WA`) is part of it.
 
 **Data Provider**:
-The upstream source of market data. Yahoo Finance. Because the Ticker uses
-Yahoo's symbol notation, the provider is part of the warehouse identity by
-design (see ADR). Previously stooq.pl (abandoned).
+The upstream source of market data, chosen per asset class. Equities come from
+Yahoo Finance (its symbol notation is the Ticker, so the provider is part of the
+warehouse identity by design — see ADR). US Treasury yields come from the
+**U.S. Department of the Treasury** (the official *Daily Treasury Par Yield Curve
+Rates* / constant-maturity feed), a keyless public source. Previously stooq.pl
+(abandoned).
 _Avoid_: data source, feed, API (when you mean the provider specifically).
+
+**Yield**:
+The annualized rate of return on a US Treasury of a given Tenor on a given
+Trading Date, expressed in percent. The unit of the Treasury asset class — a
+rate, **not** a price and **not** a Daily Bar (no open/high/low/close, no
+volume). Warehouse identity is `(Tenor, Trading Date)`.
+_Avoid_: price, rate (unqualified), interest.
+
+**Tenor**:
+The standardized time-to-maturity label of a constant-maturity Treasury Yield
+(e.g. `3M`, `2Y`, `5Y`, `10Y`, `30Y`). The Treasury analogue of a Ticker — it
+identifies *which* yield, independent of date.
+_Avoid_: maturity date, duration, term.
+
+**Yield Curve**:
+The cross-section of Yields across every Tenor on a single Trading Date — yield
+plotted against Tenor. Normal when it slopes up (long > short), *inverted* when
+short exceeds long.
+_Avoid_: term structure (informal here), rate curve.
+
+**2s10s Spread**:
+The 10Y Yield minus the 2Y Yield on a Trading Date. Negative means the curve is
+inverted at that point — a widely watched recession signal. A derived series,
+not raw data.
+_Avoid_: spread (unqualified), 10-2, curve spread.
 
 **Trading Date**:
 The business date of a single Daily Bar. The unit of incremental progress —

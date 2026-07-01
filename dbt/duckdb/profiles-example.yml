@@ -1,0 +1,10 @@
+markets_yields:
+  outputs:
+    dev:
+      type: duckdb
+      # Path to the local DuckDB warehouse the YIELD_DATA loader writes to
+      # (matches the YIELD_WAREHOUSE_DB env var used by src/yield_data).
+      path: "{{ env_var('YIELD_WAREHOUSE_DB') }}"
+      schema: main
+      threads: 1
+  target: dev

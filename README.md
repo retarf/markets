@@ -33,13 +33,16 @@ The current implementation is intentionally **batch-oriented** and **warehouse-f
 - running basic data quality checks before write
 - keeping incremental-load state in a Snowflake metastore table
 - modeling downstream analytical layers in dbt
+- serving warehouse data over FastAPI microservices (Docker Compose, for now)
+- a single-user analytical & research frontend in React + TypeScript + Vite
+  (see [ADR 0002](docs/adr/0002-react-research-platform-over-fastapi.md))
 
 ### Out of scope
 
 - real-time / streaming ingestion
 - order execution or broker integration
 - predictive modeling / ML
-- public API or frontend application
+- multi-user accounts / auth (single user for now)
 - production observability stack
 
 ## Architecture overview
@@ -60,6 +63,10 @@ Snowflake raw + metastore tables
 dbt transformations
         ↓
 Analytical models / signals
+        ↓
+FastAPI microservices (Docker Compose)
+        ↓
+React + TypeScript + Vite frontend (single-user research platform)
 ```
 
 This separation is deliberate:
@@ -68,6 +75,8 @@ This separation is deliberate:
 - **PySpark** handles file reading, filtering, validation, and loading
 - **Snowflake** stores raw and metadata tables
 - **dbt** owns analytical SQL transformations
+- **FastAPI** serves warehouse data to the frontend as JSON
+- **React + TypeScript + Vite** renders the single-user analytical & research UI
 
 ## Repository structure
 

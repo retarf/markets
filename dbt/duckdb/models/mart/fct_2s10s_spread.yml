@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: fct_2s10s_spread
+    description: >
+      2s10s Spread (10Y - 2Y) per Trading Date in basis points, derived from the
+      stored legs. Negative spread_bps = inverted curve. Only present where both
+      legs exist.
+    columns:
+      - name: trading_date
+        data_tests:
+          - not_null
+          - unique
+      - name: spread_bps
+        data_tests:
+          - not_null
+      - name: is_inverted
+        data_tests:
+          - not_null

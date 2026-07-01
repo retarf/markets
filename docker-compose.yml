@@ -56,3 +56,16 @@ services:
         tty: true
         command: bash
         user: ${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-0}
+
+    # Minimal local Temporal dev server (single container, in-file SQLite — no
+    # extra DB) for the YIELD_DATA on-demand backfill workflow. gRPC on 7233,
+    # web UI on 8233. Run the worker with `python -m yield_data.temporal_backfill`
+    # in an image that has `temporalio` + `duckdb` + `/project/src` on PYTHONPATH.
+    temporal:
+        image: temporalio/admin-tools:latest
+        command: temporal server start-dev --ip 0.0.0.0 --db-filename /home/temporal/temporal.db
+        ports:
+            - "7233:7233"
+            - "8233:8233"
+        volumes:
+            - ./dev/temporal:/home/temporal

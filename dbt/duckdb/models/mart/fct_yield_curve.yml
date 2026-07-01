@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: fct_yield_curve
+    description: >
+      Tidy (Trading Date, Tenor, Yield) fact with a maturity rank. Backs both the
+      Yield Curve snapshot and the per-Tenor series. Missing Tenors are absent
+      rows (never a zero-yield point).
+    columns:
+      - name: trading_date
+        data_tests:
+          - not_null
+      - name: tenor
+        data_tests:
+          - not_null
+      - name: tenor_order
+        description: Maturity rank (1M=0 ... 30Y=10) for ordering the curve
+        data_tests:
+          - not_null
+      - name: yield
+        data_tests:
+          - not_null

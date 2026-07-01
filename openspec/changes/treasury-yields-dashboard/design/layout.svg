@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1520" viewBox="0 0 1440 1520" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif">
+<rect x="0" y="0" width="1440" height="1520" rx="0" fill="#0b0e14"/>
+<g id="R0-header-control-bar">
+<rect x="24" y="24" width="1392" height="72" rx="8" fill="#131722" stroke="#2a3242" stroke-width="1"/>
+<text x="44" y="54" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#e6e9ef" text-anchor="start">US Treasury Yields</text>
+<text x="44" y="76" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">descriptive market data — not investment advice</text>
+<text x="364" y="50" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="start">Trading Date</text>
+<text x="364" y="74" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="start" letter-spacing="0.2">2026-06-30</text>
+<rect x="464" y="49" width="176" height="22" rx="6" fill="#1c2230" stroke="#3fb950" stroke-width="1"/>
+<text x="476" y="64" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#3fb950" text-anchor="start">↻ Updated to 2026-06-30</text>
+<text x="660" y="50" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="start">Status</text>
+<circle cx="666.0" cy="68.0" r="4" fill="#3fb950"/>
+<text x="678" y="74" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="start">Live</text>
+<text x="712" y="74" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">· connected</text>
+<text x="826" y="50" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="start">Compare (Yield Curve)</text>
+<rect x="826" y="56" width="300" height="36" rx="10" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="863.5" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#8a93a6" text-anchor="middle">Latest only</text>
+<text x="938.5" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#8a93a6" text-anchor="middle">vs 1M</text>
+<rect x="979.0" y="59" width="69.0" height="30" rx="8" fill="#0b0e14" stroke="#4c8dff" stroke-width="1.5"/>
+<rect x="986.0" y="84" width="55.0" height="2.5" rx="1" fill="#4c8dff"/>
+<text x="1013.5" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#e6e9ef" text-anchor="middle">vs 1Y</text>
+<text x="1088.5" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#8a93a6" text-anchor="middle">Custom…</text>
+<text x="1146" y="50" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="start">Time window (Spread &amp; legs)</text>
+<rect x="1146" y="56" width="250" height="36" rx="10" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="1171.0" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#8a93a6" text-anchor="middle">6M</text>
+<text x="1221.0" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#8a93a6" text-anchor="middle">1Y</text>
+<rect x="1249.0" y="59" width="44.0" height="30" rx="8" fill="#0b0e14" stroke="#4c8dff" stroke-width="1.5"/>
+<rect x="1256.0" y="84" width="30.0" height="2.5" rx="1" fill="#4c8dff"/>
+<text x="1271.0" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#e6e9ef" text-anchor="middle">2Y</text>
+<rect x="1244.0" y="54" width="54.0" height="40" rx="11" fill="none" stroke="#86b0ff" stroke-width="2" stroke-dasharray="3 2"/>
+<text x="1321.0" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#8a93a6" text-anchor="middle">5Y</text>
+<text x="1371.0" y="79.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="400" fill="#8a93a6" text-anchor="middle">Max</text>
+</g>
+<g id="R1-yield-curve-hero">
+<rect x="24" y="112" width="1392" height="470" rx="8" fill="#131722" stroke="#2a3242" stroke-width="1"/>
+<text x="44" y="142" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#e6e9ef" text-anchor="start">Yield Curve</text>
+<text x="172.56" y="142" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">latest Trading Date, Yield (%) by Tenor ordered by maturity</text>
+<line x1="108" y1="538.0" x2="1392" y2="538.0" stroke="#2a3242" stroke-width="1"/>
+<text x="96" y="542.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">3.5</text>
+<line x1="108" y1="447.5" x2="1392" y2="447.5" stroke="#2a3242" stroke-width="1"/>
+<text x="96" y="451.5" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">4.0</text>
+<line x1="108" y1="357.0" x2="1392" y2="357.0" stroke="#2a3242" stroke-width="1"/>
+<text x="96" y="361.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">4.5</text>
+<line x1="108" y1="266.5" x2="1392" y2="266.5" stroke="#2a3242" stroke-width="1"/>
+<text x="96" y="270.5" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">5.0</text>
+<line x1="108" y1="176.0" x2="1392" y2="176.0" stroke="#2a3242" stroke-width="1"/>
+<text x="96" y="180.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">5.5</text>
+<text x="54" y="357.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="middle" transform="rotate(-90 54 357.0)">Yield (%)</text>
+<line x1="108.0" y1="538" x2="108.0" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="108.0" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">1M</text>
+<line x1="236.4" y1="538" x2="236.4" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="236.4" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">3M</text>
+<line x1="364.8" y1="538" x2="364.8" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="364.8" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">6M</text>
+<line x1="493.2" y1="538" x2="493.2" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="493.2" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">1Y</text>
+<line x1="621.6" y1="538" x2="621.6" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="621.6" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#e6e9ef" text-anchor="middle">2Y</text>
+<line x1="750.0" y1="538" x2="750.0" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="750.0" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">3Y</text>
+<line x1="878.4" y1="538" x2="878.4" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="878.4" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">5Y</text>
+<line x1="1006.8" y1="538" x2="1006.8" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="1006.8" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">7Y</text>
+<line x1="1135.2" y1="538" x2="1135.2" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="1135.2" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#e6e9ef" text-anchor="middle">10Y</text>
+<line x1="1263.6000000000001" y1="538" x2="1263.6000000000001" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="1263.6000000000001" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">20Y</text>
+<line x1="1392.0" y1="538" x2="1392.0" y2="543" stroke="#2a3242" stroke-width="1"/>
+<text x="1392.0" y="560" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">30Y</text>
+<text x="750.0" y="578" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="middle">Tenor</text>
+<polyline points="108.0,212.2 236.4,221.2 364.8,239.3 493.2,275.5 621.6,320.8 750.0,348.0 878.4,366.0 1006.8,360.6 1135.2,348.0 1263.6,302.7 1392.0,311.8" fill="none" stroke="#e6e9ef" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5" opacity="0.75"/>
+<rect x="104.5" y="208.7" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="232.9" y="217.8" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="361.3" y="235.8" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="489.7" y="272.0" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="618.1" y="317.3" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="746.5" y="344.5" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="874.9" y="362.5" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="1003.3" y="357.1" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="1131.7" y="344.5" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="1260.1" y="299.2" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="1388.5" y="308.2" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<polyline points="108.0,293.7 236.4,320.8 364.8,348.0 493.2,393.2 621.6,438.5 750.0,456.5 878.4,465.6 1006.8,456.5 1135.2,438.5" fill="none" stroke="#4c8dff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="108.0" cy="293.7" r="4.5" fill="#4c8dff"/>
+<circle cx="236.4" cy="320.8" r="4.5" fill="#4c8dff"/>
+<circle cx="364.8" cy="348.0" r="4.5" fill="#4c8dff"/>
+<circle cx="493.2" cy="393.2" r="4.5" fill="#4c8dff"/>
+<circle cx="621.6" cy="438.5" r="4.5" fill="#4c8dff"/>
+<circle cx="750.0" cy="456.5" r="4.5" fill="#4c8dff"/>
+<circle cx="878.4" cy="465.6" r="4.5" fill="#4c8dff"/>
+<circle cx="1006.8" cy="456.5" r="4.5" fill="#4c8dff"/>
+<circle cx="1135.2" cy="438.5" r="4.5" fill="#4c8dff"/>
+<circle cx="1392.0" cy="384.2" r="4.5" fill="#4c8dff"/>
+<line x1="1263.6" y1="176" x2="1263.6" y2="538" stroke="#8a93a6" stroke-width="1" stroke-dasharray="2 4" opacity="0.6"/>
+<rect x="1092" y="170" width="300" height="56" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<line x1="1108" y1="190" x2="1136" y2="190" stroke="#4c8dff" stroke-width="3"/>
+<circle cx="1122.0" cy="190.0" r="4.5" fill="#4c8dff"/>
+<text x="1146" y="194" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="start">Latest</text>
+<text x="1376" y="194" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">2026-06-30</text>
+<line x1="1108" y1="212" x2="1136" y2="212" stroke="#e6e9ef" stroke-width="2" stroke-dasharray="7 5" opacity="0.75"/>
+<rect x="1118.5" y="208.5" width="7.0" height="7.0" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<text x="1146" y="216" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="start">1Y ago</text>
+<text x="1376" y="216" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">2025-06-28</text>
+<rect x="108" y="576" width="67" height="20" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="141.5" y="590" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#f0524b" text-anchor="middle">Partial</text>
+<text x="185" y="590" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">20Y omitted — no FRED print for this Trading Date (not drawn at zero, line breaks at the gap)</text>
+</g>
+<g id="R2-2s10s-spread">
+<rect x="24" y="598" width="1392" height="236" rx="8" fill="#131722" stroke="#2a3242" stroke-width="1"/>
+<text x="44" y="628" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#e6e9ef" text-anchor="start">2s10s Spread</text>
+<text x="181.52" y="628" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">10Y − 2Y over time (basis points)</text>
+<line x1="96" y1="644.0" x2="1392" y2="644.0" stroke="#2a3242" stroke-width="1"/>
+<text x="84" y="648.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">+20</text>
+<line x1="96" y1="718.6666666666666" x2="1392" y2="718.6666666666666" stroke="#2a3242" stroke-width="1"/>
+<text x="84" y="722.6666666666666" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">-20</text>
+<line x1="96" y1="756.0" x2="1392" y2="756.0" stroke="#2a3242" stroke-width="1"/>
+<text x="84" y="760.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">-40</text>
+<line x1="96" y1="793.3333333333334" x2="1392" y2="793.3333333333334" stroke="#2a3242" stroke-width="1"/>
+<text x="84" y="797.3333333333334" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">-60</text>
+<text x="48" y="728.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="middle" transform="rotate(-90 48 728.0)">Spread (bp)</text>
+<line x1="96.0" y1="644" x2="96.0" y2="812" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="312.0" y1="644" x2="312.0" y2="812" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="528.0" y1="644" x2="528.0" y2="812" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="744.0" y1="644" x2="744.0" y2="812" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="960.0" y1="644" x2="960.0" y2="812" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="1176.0" y1="644" x2="1176.0" y2="812" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="1392.0" y1="644" x2="1392.0" y2="812" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<polygon points="96.0,774.7 150.0,780.3 204.0,785.9 258.0,791.5 312.0,797.1 366.0,795.2 420.0,793.3 474.0,791.5 528.0,789.6 582.0,782.1 636.0,774.7 690.0,767.2 744.0,759.7 798.0,751.3 852.0,742.9 906.0,734.5 960.0,726.1 1014.0,714.9 1068.0,703.7 1122.0,692.5 1176.0,681.3 1230.0,681.3 1284.0,681.3 1338.0,681.3 1392.0,681.3 1392.0,681.3 1338.0,681.3 1284.0,681.3 1230.0,681.3 1176.0,681.3 1122.0,681.3 1068.0,681.3 1014.0,681.3 960.0,681.3 906.0,681.3 852.0,681.3 798.0,681.3 744.0,681.3 690.0,681.3 636.0,681.3 582.0,681.3 528.0,681.3 474.0,681.3 420.0,681.3 366.0,681.3 312.0,681.3 258.0,681.3 204.0,681.3 150.0,681.3 96.0,681.3" fill="#f0524b" opacity="0.16"/>
+<polyline points="96.0,774.7 150.0,780.3 204.0,785.9 258.0,791.5 312.0,797.1 366.0,795.2 420.0,793.3 474.0,791.5 528.0,789.6 582.0,782.1 636.0,774.7 690.0,767.2 744.0,759.7 798.0,751.3 852.0,742.9 906.0,734.5 960.0,726.1 1014.0,714.9 1068.0,703.7 1122.0,692.5 1176.0,675.7 1230.0,671.5 1284.0,667.3 1338.0,663.1 1392.0,658.9" fill="none" stroke="#e6e9ef" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="96" y1="681.3333333333334" x2="1392" y2="681.3333333333334" stroke="#e6e9ef" stroke-width="2"/>
+<text x="1388" y="673.3333333333334" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="600" fill="#e6e9ef" text-anchor="end" letter-spacing="0.2">0 bp</text>
+<text x="420.0" y="722.4" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#f0524b" text-anchor="middle">▼ inverted</text>
+<text x="420.0" y="738.4" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">curve inverted (spread &lt; 0)</text>
+</g>
+<g id="R3-2y-10y-series">
+<rect x="24" y="846" width="1392" height="236" rx="8" fill="#131722" stroke="#2a3242" stroke-width="1"/>
+<text x="44" y="876" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700" fill="#e6e9ef" text-anchor="start">2Y &amp; 10Y</text>
+<text x="145.68" y="876" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">underlying Yields over time (%)</text>
+<line x1="96" y1="1042.0" x2="1392" y2="1042.0" stroke="#2a3242" stroke-width="1"/>
+<text x="84" y="1046.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">3.6</text>
+<line x1="96" y1="992.0" x2="1392" y2="992.0" stroke="#2a3242" stroke-width="1"/>
+<text x="84" y="996.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">4.0</text>
+<line x1="96" y1="942.0" x2="1392" y2="942.0" stroke="#2a3242" stroke-width="1"/>
+<text x="84" y="946.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">4.4</text>
+<line x1="96" y1="892.0" x2="1392" y2="892.0" stroke="#2a3242" stroke-width="1"/>
+<text x="84" y="896.0" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="end" letter-spacing="0.2">4.8</text>
+<text x="48" y="967.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="middle" transform="rotate(-90 48 967.0)">Yield (%)</text>
+<line x1="96.0" y1="892" x2="96.0" y2="1042" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="312.0" y1="892" x2="312.0" y2="1042" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="528.0" y1="892" x2="528.0" y2="1042" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="744.0" y1="892" x2="744.0" y2="1042" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="960.0" y1="892" x2="960.0" y2="1042" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="1176.0" y1="892" x2="1176.0" y2="1042" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<line x1="1392.0" y1="892" x2="1392.0" y2="1042" stroke="#2a3242" stroke-width="1" opacity="0.5"/>
+<polyline points="96.0,967.0 150.0,970.1 204.0,973.2 258.0,976.4 312.0,979.5 366.0,982.6 420.0,985.8 474.0,987.8 528.0,989.9 582.0,992.0 636.0,994.1 690.0,996.2 744.0,998.2 798.0,997.2 852.0,996.2 906.0,995.1 960.0,994.1 1014.0,993.0 1068.0,992.0 1122.0,991.0 1176.0,989.9 1230.0,988.9 1284.0,987.8 1338.0,986.8 1392.0,985.8" fill="none" stroke="#e6e9ef" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 5" opacity="0.8"/>
+<rect x="92.8" y="963.8" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<rect x="254.8" y="973.2" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<rect x="416.8" y="982.5" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<rect x="578.8" y="988.8" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<rect x="740.8" y="995.0" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<rect x="902.8" y="991.9" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<rect x="1064.8" y="988.8" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<rect x="1226.8" y="985.7" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<rect x="1388.8" y="982.5" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<polyline points="96.0,904.5 150.0,903.9 204.0,903.2 258.0,902.6 312.0,902.0 366.0,906.4 420.0,910.8 474.0,914.1 528.0,917.4 582.0,924.5 636.0,931.6 690.0,938.7 744.0,945.8 798.0,950.3 852.0,954.9 906.0,959.5 960.0,964.1 1014.0,970.5 1068.0,977.0 1122.0,983.5 1176.0,993.7 1230.0,995.4 1284.0,997.2 1338.0,999.0 1392.0,1000.8" fill="none" stroke="#4c8dff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="96.0" cy="904.5" r="3.6" fill="#4c8dff"/>
+<circle cx="258.0" cy="902.6" r="3.6" fill="#4c8dff"/>
+<circle cx="420.0" cy="910.8" r="3.6" fill="#4c8dff"/>
+<circle cx="582.0" cy="924.5" r="3.6" fill="#4c8dff"/>
+<circle cx="744.0" cy="945.8" r="3.6" fill="#4c8dff"/>
+<circle cx="906.0" cy="959.5" r="3.6" fill="#4c8dff"/>
+<circle cx="1068.0" cy="977.0" r="3.6" fill="#4c8dff"/>
+<circle cx="1230.0" cy="995.4" r="3.6" fill="#4c8dff"/>
+<circle cx="1392.0" cy="1000.8" r="3.6" fill="#4c8dff"/>
+<line x1="96.0" y1="1042" x2="96.0" y2="1047" stroke="#2a3242" stroke-width="1"/>
+<text x="96.0" y="1064" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">Jun &#x27;24</text>
+<line x1="312.0" y1="1042" x2="312.0" y2="1047" stroke="#2a3242" stroke-width="1"/>
+<text x="312.0" y="1064" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">Oct &#x27;24</text>
+<line x1="528.0" y1="1042" x2="528.0" y2="1047" stroke="#2a3242" stroke-width="1"/>
+<text x="528.0" y="1064" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">Feb &#x27;25</text>
+<line x1="744.0" y1="1042" x2="744.0" y2="1047" stroke="#2a3242" stroke-width="1"/>
+<text x="744.0" y="1064" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">Jun &#x27;25</text>
+<line x1="960.0" y1="1042" x2="960.0" y2="1047" stroke="#2a3242" stroke-width="1"/>
+<text x="960.0" y="1064" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">Oct &#x27;25</text>
+<line x1="1176.0" y1="1042" x2="1176.0" y2="1047" stroke="#2a3242" stroke-width="1"/>
+<text x="1176.0" y="1064" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">Feb &#x27;26</text>
+<line x1="1392.0" y1="1042" x2="1392.0" y2="1047" stroke="#2a3242" stroke-width="1"/>
+<text x="1392.0" y="1064" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">Jun &#x27;26</text>
+<text x="744.0" y="1082" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="middle">Trading Date — shared time axis with 2s10s Spread</text>
+<rect x="1142" y="886" width="250" height="30" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<line x1="1156" y1="901" x2="1182" y2="901" stroke="#4c8dff" stroke-width="2.6"/>
+<circle cx="1169.0" cy="901.0" r="3.6" fill="#4c8dff"/>
+<text x="1192" y="905" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#e6e9ef" text-anchor="start">2Y (solid)</text>
+<line x1="1282" y1="901" x2="1308" y2="901" stroke="#e6e9ef" stroke-width="2" stroke-dasharray="7 5"/>
+<rect x="1291.8" y="897.8" width="6.4" height="6.4" fill="#131722" stroke="#e6e9ef" stroke-width="1.5"/>
+<text x="1318" y="905" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#e6e9ef" text-anchor="start">10Y (dashed)</text>
+</g>
+<g id="linked-crosshair-tooltips">
+<line x1="1014.0" y1="644" x2="1014.0" y2="1042" stroke="#86b0ff" stroke-width="1.5" stroke-dasharray="4 4"/>
+<rect x="940.0" y="620" width="148" height="22" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="1014.0" y="635" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#86b0ff" text-anchor="middle">◂ ▸  arrow keys</text>
+<rect x="938.0" y="618" width="152" height="26" rx="8" fill="none" stroke="#86b0ff" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="1014.0" cy="714.9" r="4.5" fill="#e6e9ef" stroke="#131722" stroke-width="1.5"/>
+<circle cx="1014.0" cy="970.8" r="4.5" fill="#4c8dff" stroke="#131722" stroke-width="1.5"/>
+<rect x="1010.0" y="989.2" width="8" height="8" fill="#131722" stroke="#e6e9ef" stroke-width="1.6"/>
+<rect x="810.0" y="650" width="190" height="54" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="822.0" y="670" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="600" fill="#e6e9ef" text-anchor="start" letter-spacing="0.2">2025-11-14</text>
+<rect x="928.0" y="658" width="60" height="20" rx="6" fill="#131722" stroke="#2a3242" stroke-width="1"/>
+<text x="958.0" y="672" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#f0524b" text-anchor="middle">inverted</text>
+<text x="822.0" y="690" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#e6e9ef" text-anchor="start" letter-spacing="0.2">spread  −18 bp</text>
+<rect x="810.0" y="898" width="190" height="54" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="822.0" y="918" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="600" fill="#e6e9ef" text-anchor="start" letter-spacing="0.2">2Y 4.17%  10Y 3.99%</text>
+<text x="822.0" y="938" font-family="'JetBrains Mono','SF Mono',ui-monospace,Menlo,Consolas,monospace" font-size="12" font-weight="400" fill="#e6e9ef" text-anchor="start" letter-spacing="0.2">Δ  −18 bp</text>
+</g>
+<g id="STATES-nonnominal-variants">
+<line x1="24" y1="1110" x2="1416" y2="1110" stroke="#2a3242" stroke-width="1"/>
+<text x="24" y="1134" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#e6e9ef" text-anchor="start">Non-nominal state variants</text>
+<text x="274" y="1134" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">compact previews of the state matrix — the panels above stay nominal</text>
+<rect x="24" y="1150" width="453.3333333333333" height="176" rx="8" fill="#131722" stroke="#2a3242" stroke-width="1"/>
+<text x="40" y="1176" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#e6e9ef" text-anchor="start">R2 · 2s10s Spread</text>
+<rect x="185.28" y="1162" width="67" height="20" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="218.78" y="1176" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#8a93a6" text-anchor="middle">Loading</text>
+<line x1="64" y1="1194" x2="64" y2="1300" stroke="#2a3242" stroke-width="1" opacity="0.7"/>
+<line x1="64" y1="1300" x2="457.3333333333333" y2="1300" stroke="#2a3242" stroke-width="1" opacity="0.7"/>
+<line x1="64" y1="1220.5" x2="457.3333333333333" y2="1220.5" stroke="#2a3242" stroke-width="1"/>
+<line x1="64" y1="1247.0" x2="457.3333333333333" y2="1247.0" stroke="#2a3242" stroke-width="1"/>
+<line x1="64" y1="1273.5" x2="457.3333333333333" y2="1273.5" stroke="#2a3242" stroke-width="1"/>
+<rect x="70" y="1200" width="90" height="10" rx="4" fill="#1c2230"/>
+<rect x="70" y="1218" width="60" height="10" rx="4" fill="#1c2230"/>
+<rect x="70" y="1236" width="120" height="10" rx="4" fill="#1c2230"/>
+<text x="260.66666666666663" y="1267.0" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a93a6" text-anchor="middle">Loading…</text>
+<rect x="493.3333333333333" y="1150" width="453.3333333333333" height="176" rx="8" fill="#131722" stroke="#2a3242" stroke-width="1"/>
+<text x="509.3333333333333" y="1176" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#e6e9ef" text-anchor="start">R2 · 2s10s Spread</text>
+<rect x="654.6133333333333" y="1162" width="53" height="20" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="681.1133333333333" y="1176" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#f0524b" text-anchor="middle">Error</text>
+<text x="720.0" y="1228" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="700" fill="#f0524b" text-anchor="middle">⚠</text>
+<text x="720.0" y="1254" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="middle">Couldn&#x27;t load the 2s10s Spread —</text>
+<text x="720.0" y="1274" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">query service unreachable.</text>
+<rect x="674.56" y="1284" width="90" height="36" rx="8" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="719.56" y="1306.9" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" fill="#e6e9ef" text-anchor="middle">↻ Retry</text>
+<rect x="962.6666666666666" y="1150" width="453.3333333333333" height="176" rx="8" fill="#131722" stroke="#2a3242" stroke-width="1"/>
+<text x="978.6666666666666" y="1176" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" fill="#e6e9ef" text-anchor="start">R2 · 2s10s Spread</text>
+<rect x="1123.9466666666667" y="1162" width="53" height="20" rx="6" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="1150.4466666666667" y="1176" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#8a93a6" text-anchor="middle">Empty</text>
+<text x="1189.3333333333333" y="1234" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="middle">No 2s10s Spread data for this window.</text>
+<text x="1189.3333333333333" y="1254" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="middle">Widen the Time window, or check ingestion.</text>
+<rect x="1143.8933333333332" y="1272" width="90" height="36" rx="8" fill="#1c2230" stroke="#2a3242" stroke-width="1"/>
+<text x="1188.8933333333332" y="1294.9" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="500" fill="#e6e9ef" text-anchor="middle">↻ Retry</text>
+<rect x="24" y="1346" width="1392" height="52" rx="8" fill="#1c2230" stroke="#f0524b" stroke-width="1.5"/>
+<text x="44" y="1370" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" fill="#8a93a6" text-anchor="start">R0 banner — serving tier unreachable</text>
+<text x="44" y="1388" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="start">⚠  Yields query gateway timed out — no panels could load.</text>
+<rect x="1306" y="1354" width="90" height="36" rx="8" fill="#f0524b"/>
+<text x="1351.0" y="1376.9" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#0b0e14" text-anchor="middle">↻ Retry</text>
+<text x="24" y="1420" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#8a93a6" text-anchor="start">Live-status variants</text>
+<circle cx="32.0" cy="1440.0" r="5" fill="#3fb950"/>
+<text x="46" y="1444" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="start">Live</text>
+<text x="88" y="1444" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">· SSE connected</text>
+<circle cx="292" cy="1440" r="5" fill="none" stroke="#8a93a6" stroke-width="1.5"/>
+<path d="M 292 1435 A 5 5 0 0 1 292 1445 Z" fill="#8a93a6"/>
+<text x="306" y="1444" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="start">Reconnecting…</text>
+<text x="434" y="1444" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">· retrying stream</text>
+<circle cx="592" cy="1440" r="5" fill="none" stroke="#8a93a6" stroke-width="1.5"/>
+<text x="606" y="1444" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#e6e9ef" text-anchor="start">Offline</text>
+<text x="662" y="1444" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">· last update 2026-06-30</text>
+<text x="924" y="1420" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" fill="#8a93a6" text-anchor="start">Keyboard</text>
+<text x="924" y="1444" font-family="Inter, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400" fill="#8a93a6" text-anchor="start">Tab → visible focus ring (shown on 2Y); ◂ ▸ move the crosshair.</text>
+</g>
+</svg>
