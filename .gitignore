@@ -5,3 +5,6 @@ datalake
 dev
 __pycache__
 .vscode
+.claude/settings.local.json
+.playwright-mcp
+dashboard.png

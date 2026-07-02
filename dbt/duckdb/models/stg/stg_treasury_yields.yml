@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_treasury_yields
+    description: Typed, deduplicated yields, one row per (Tenor, Trading Date).
+    columns:
+      - name: tenor
+        data_tests:
+          - not_null
+      - name: trading_date
+        data_tests:
+          - not_null
+      - name: yield
+        data_tests:
+          - not_null

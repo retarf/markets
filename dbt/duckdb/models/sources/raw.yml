@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: main
+    description: >
+      Raw US Treasury constant-maturity yields loaded into the local DuckDB
+      warehouse by the YIELD_DATA ingestion (src/yield_data).
+
+    tables:
+      - name: raw_treasury_yields
+        description: >
+          One row per (Tenor, Trading Date). Yield is a decimal percent.
+          Gaps (no Treasury print) are absent rows, never zero-filled.
+        columns:
+          - name: tenor
+            description: Constant-maturity Tenor label (e.g. 2Y, 10Y)
+            data_tests:
+              - not_null
+          - name: trading_date
+            description: Business date of the yield
+            data_tests:
+              - not_null
+          - name: yield
+            description: Par yield, decimal percent
+            data_tests:
+              - not_null
