@@ -2,7 +2,8 @@ from datetime import date
 
 import pytest
 
-from yield_data import RAW_TABLE, METASTORE_TABLE
+from yield_data import RAW_TABLE, METASTORE_TABLE, events
+from yield_data.load_data import operations
 from yield_data.load_data.warehouse import get_connection, ensure_tables
 from yield_data.load_data.operations import (
     read_rows_from_csv,
@@ -106,6 +107,30 @@ def test__read_rows_from_csv__types_the_columns(tmp_path):
 
     assert ("10Y", date(2026, 6, 30), 4.44) in rows
     assert all(isinstance(d, date) for _, d, _ in rows)
+
+
+def test__load_csv__emits_event_with_max_date_and_tenors(con, tmp_path, monkeypatch):
+    captured = {}
+    monkeypatch.setattr(operations, "emit_yields_ingested",
+                        lambda d, t: captured.update(date=d, tenors=set(t)))
+    load_csv(con, write_csv(tmp_path, "y.csv", DAY1 + DAY2))
+
+    assert captured["date"] == date(2026, 6, 30)          # latest loaded
+    assert captured["tenors"] == {"2Y", "10Y"}
+
+
+def test__load_csv__does_not_emit_when_nothing_new(con, tmp_path, monkeypatch):
+    load_csv(con, write_csv(tmp_path, "y.csv", DAY1 + DAY2))
+    calls = []
+    monkeypatch.setattr(operations, "emit_yields_ingested", lambda d, t: calls.append((d, t)))
+    load_csv(con, write_csv(tmp_path, "y2.csv", DAY1 + DAY2))  # re-load, nothing new
+
+    assert calls == []
+
+
+def test__emit_yields_ingested__noop_without_nats_url(monkeypatch):
+    monkeypatch.delenv("NATS_URL", raising=False)
+    assert events.emit_yields_ingested("2026-06-30", ["2Y", "10Y"]) is False
 
 
 def test__select_incremental__keeps_only_newer_per_tenor():

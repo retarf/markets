@@ -1,0 +1,9 @@
+# Serving tier: FastAPI query service, API gateway, and the yields
+# ingestion/Temporal worker. Kept lean and local-first (DuckDB, no cloud SDKs).
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+httpx==0.28.1
+duckdb==1.1.3
+nats-py==2.9.0
+temporalio==1.9.0
+requests==2.32.3

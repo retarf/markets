@@ -1,17 +1,22 @@
 # Markets — Data Engineering & Analytics Project
 
-Markets is a portfolio project focused on building an end-to-end batch pipeline for historical stock market data.
+Markets is a portfolio project focused on building end-to-end pipelines for historical market data, now spanning **two domains**:
+
+- **STOCK_DATA** — historical equity bars (Yahoo Finance → Snowflake).
+- **YIELD_DATA** — U.S. Treasury par yield curve, with an event-driven serving tier and a React dashboard that tracks the 2Y, the 10Y, and the yield curve.
 
 The project combines:
 
 - **Python** for ingestion logic
-- **Apache Airflow** for orchestration
-- **PySpark** for loading and validating data
-- **Snowflake** as the analytical warehouse
-- **dbt** for downstream SQL transformations
+- **Apache Airflow** for orchestration (daily batch)
+- **Temporal** for durable, resumable on-demand backfills (YIELD_DATA)
+- **PySpark** for loading and validating equity data
+- **Snowflake** as the equity analytical warehouse; **DuckDB** as the local, keyless warehouse for YIELD_DATA
+- **dbt** for downstream SQL transformations (`dbt/snowflake`, `dbt/duckdb`)
+- **NATS** as the event bus + **FastAPI** microservices (query-service, api-gateway) serving the yields data with **SSE** live push
 - **Docker Compose** for local development
 
-The current implementation is intentionally **batch-oriented** and **warehouse-first**. It is meant to demonstrate data engineering practices around ingestion, orchestration, validation, incremental loading, and layered transformations rather than real-time trading or investment automation.
+The equity pipeline is intentionally **batch-oriented** and **warehouse-first**. The yields domain adds an **event-driven serving tier** on top of the same batch-ingestion discipline. It is meant to demonstrate data engineering practices around ingestion, orchestration, validation, incremental loading, layered transformations, and serving — rather than real-time trading or investment automation. See [ADR 0003](docs/adr/0003-yield-data-parallel-domain.md)–[0006](docs/adr/0006-duckdb-local-warehouse-for-yields.md) for the yields-domain decisions.
 
 ## Project goals
 
@@ -33,9 +38,11 @@ The current implementation is intentionally **batch-oriented** and **warehouse-f
 - running basic data quality checks before write
 - keeping incremental-load state in a Snowflake metastore table
 - modeling downstream analytical layers in dbt
+- **YIELD_DATA:** ingesting the keyless U.S. Treasury par yield curve into a local DuckDB warehouse, with an Airflow daily pull and a Temporal durable backfill sharing the same activities
+- **YIELD_DATA:** dbt-duckdb marts (`fct_yield_curve`, `fct_2s10s_spread`) and an event-driven serving tier (NATS event on load → FastAPI query-service → SSE → api-gateway)
 - serving warehouse data over FastAPI microservices (Docker Compose, for now)
 - a single-user analytical & research frontend in React + TypeScript + Vite
-  (see [ADR 0002](docs/adr/0002-react-research-platform-over-fastapi.md))
+  (see [ADR 0002](docs/adr/0002-react-research-platform-over-fastapi.md)) — the Yields Dashboard (curve + 2s10s + 2Y/10Y legs, live via SSE)
 
 ### Out of scope
 
@@ -47,7 +54,7 @@ The current implementation is intentionally **batch-oriented** and **warehouse-f
 
 ## Architecture overview
 
-The pipeline currently follows this flow:
+### STOCK_DATA (equities) — batch, warehouse-first
 
 ```text
 External data source
@@ -63,10 +70,6 @@ Snowflake raw + metastore tables
 dbt transformations
         ↓
 Analytical models / signals
-        ↓
-FastAPI microservices (Docker Compose)
-        ↓
-React + TypeScript + Vite frontend (single-user research platform)
 ```
 
 This separation is deliberate:
@@ -75,8 +78,35 @@ This separation is deliberate:
 - **PySpark** handles file reading, filtering, validation, and loading
 - **Snowflake** stores raw and metadata tables
 - **dbt** owns analytical SQL transformations
-- **FastAPI** serves warehouse data to the frontend as JSON
-- **React + TypeScript + Vite** renders the single-user analytical & research UI
+
+### YIELD_DATA (Treasury yields) — batch ingestion + event-driven serving
+
+```text
+U.S. Treasury keyless CSV feed (one file per year)
+        ↓
+CSV files in local datalake  (dt=YYYY-MM-DD)
+        ↓
+Airflow daily pull  ·  Temporal durable backfill   (shared activities)
+        ↓
+DuckDB raw + metastore tables         ── on load ──►  NATS  treasury.yields.ingested
+        ↓                                                        │
+dbt-duckdb marts                                                 ▼
+  fct_yield_curve, fct_2s10s_spread              yields-query-service (FastAPI)
+        ↓                                          ├─ /yields/curve · /spread · /series
+        └──────────────── read ──────────────────►├─ /yields/stream (SSE live push)
+                                                   ▼
+                                            api-gateway (CORS, SSE-passthrough)
+                                                   ▼
+                                 React + TS + Vite dashboard (5173)
+```
+
+Roles in the yields serving tier:
+
+- **Airflow** runs the daily pull; **Temporal** runs resumable, idempotent on-demand backfills over the *same* activities
+- **DuckDB** is the local, keyless warehouse (no cloud account needed); **dbt-duckdb** builds the curve + 2s10s marts
+- **NATS** carries a `treasury.yields.ingested {trading_date, tenors}` event emitted when a load advances the warehouse
+- **yields-query-service** reads the DuckDB marts and pushes live updates over **SSE**; **api-gateway** fronts it for the browser
+- **React + TypeScript + Vite** (`frontend/`, visx charts, TanStack Query) renders the yield-curve, 2s10s-spread, and 2Y/10Y-series panels and redraws live on SSE
 
 ## Repository structure
 
@@ -241,14 +271,61 @@ That gives the project a good separation between:
 - warehouse storage,
 - analytical SQL modeling.
 
+## Treasury yields serving tier (YIELD_DATA)
+
+The yields domain runs entirely **locally and keyless** — the U.S. Treasury feed needs no API key and DuckDB needs no cloud account. Key paths:
+
+```text
+src/yield_data/          fetch/load activities, events (NATS), Temporal backfill
+dbt/duckdb/              dbt-duckdb project: stg + fct_yield_curve + fct_2s10s_spread
+services/
+├── yields_query_service/  FastAPI: curve/spread/series + NATS consumer + SSE
+└── api_gateway/           FastAPI edge: /api/yields/* proxy, CORS, SSE-passthrough
+images/services/         shared Dockerfile for the three serving processes
+frontend/                React + TS + Vite dashboard (visx, TanStack Query)
+```
+
+Compose services: `nats`, `temporal`, `yields-ingestion-service` (Temporal worker + NATS publisher), `yields-query-service`, `api-gateway`, `frontend`.
+
+**Run the end-to-end path** (verified: a 2025–2026 backfill loads ~4,100 rows → NATS event → SSE → marts → live endpoints):
+
+```bash
+# 1. bring up the stack
+docker compose up -d --build
+
+# 2. trigger a durable backfill through the Temporal worker (host client)
+TEMPORAL_ADDRESS=localhost:7233 PYTHONPATH=src \
+  python -c "import asyncio; from yield_data.temporal_backfill import start_backfill; \
+             print(asyncio.run(start_backfill(2025, 2026, '2026-07-02')))"
+
+# 3. build the DuckDB marts (dbt-duckdb)
+cd dbt/duckdb && YIELD_WAREHOUSE_DB=../../datalake/YIELD_DATA/yield_warehouse.duckdb \
+  dbt run --profiles-dir . && dbt test --profiles-dir .
+
+# 4. query through the gateway
+curl "http://localhost:8090/api/yields/curve?date=latest"
+curl "http://localhost:8090/api/yields/spread?window=max"
+curl -N "http://localhost:8090/api/yields/stream"     # SSE live updates
+
+# 5. open the dashboard
+open http://localhost:5173     # curve + 2s10s + 2Y/10Y legs, live via SSE
+```
+
+> **Port overrides:** the Temporal, Airflow, and query-service host ports are overridable
+> (`TEMPORAL_GRPC_PORT`, `TEMPORAL_UI_PORT`, `AIRFLOW_PORT`, `YIELDS_QUERY_PORT`) if another
+> local service already binds `7233` / `8080` / `8000`. Inter-service traffic uses the compose
+> network regardless, so only the host-published ports need remapping.
+
 ## Local development
+
+The yields serving tier adds `nats`, `temporal` (dev server, SQLite in a named volume), and the three FastAPI/worker services from the shared `images/services/Dockerfile`.
 
 The project uses Docker Compose to run the local environment. The compose file builds an Airflow-based service from `dockerfile/airflow/Dockerfile`, mounts the project directories, loads environment variables from `.env`, and starts a Postgres service as well. It also supports a custom home directory mount through `DOCKER_HOME_DIR`. citeturn915894view2
 
 Typical startup:
 
 ```bash
-docker compose up --build
+docker compose up -d --build
 ```
 
 ## Environment configuration

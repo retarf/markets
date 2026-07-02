@@ -5,6 +5,7 @@ from datetime import datetime, date
 import duckdb
 
 from yield_data import RAW_TABLE, DATE_FORMAT
+from yield_data.events import emit_yields_ingested
 from yield_data.load_data.warehouse import ensure_tables
 from yield_data.load_data.quality_checks import perform_quality_checks
 from yield_data.load_data.metastore import (
@@ -84,4 +85,10 @@ def load_csv(con: duckdb.DuckDBPyConnection, csv_file_path: str) -> int:
     load_rows(con, new_rows, source_path=csv_file_path)
     advance_metastore(con, new_rows)
     logger.info(f"Loaded {len(new_rows)} new observations from {csv_file_path}.")
+
+    # Announce that the warehouse advanced (no-op unless NATS_URL is configured).
+    max_date = max(td for _, td, _ in new_rows)
+    tenors = {tenor for tenor, _, _ in new_rows}
+    emit_yields_ingested(max_date, tenors)
+
     return len(new_rows)

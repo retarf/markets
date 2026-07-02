@@ -17,7 +17,7 @@ services:
             - ./images:/images
             - ./.env:/project/.env
         ports:
-            - "8080:8080"
+            - "${AIRFLOW_PORT:-8080}:8080"
         command: standalone
 
     pyspark:
@@ -61,11 +61,116 @@ services:
     # extra DB) for the YIELD_DATA on-demand backfill workflow. gRPC on 7233,
     # web UI on 8233. Run the worker with `python -m yield_data.temporal_backfill`
     # in an image that has `temporalio` + `duckdb` + `/project/src` on PYTHONPATH.
+    # Persist the SQLite DB in a named volume (not a host bind mount): the image
+    # runs as uid 1000 and can't write a host dir owned by another uid.
     temporal:
         image: temporalio/admin-tools:latest
         command: temporal server start-dev --ip 0.0.0.0 --db-filename /home/temporal/temporal.db
+        # Host-published ports are overridable to avoid clashing with another
+        # local Temporal (the in-compose worker uses the internal 7233 regardless).
         ports:
-            - "7233:7233"
-            - "8233:8233"
+            - "${TEMPORAL_GRPC_PORT:-7233}:7233"
+            - "${TEMPORAL_UI_PORT:-8233}:8233"
         volumes:
-            - ./dev/temporal:/home/temporal
+            - temporal-data:/home/temporal
+        healthcheck:
+            test: ["CMD", "temporal", "operator", "cluster", "health"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+            start_period: 5s
+
+    # NATS event bus for the yields serving tier: the ingestion side publishes
+    # `treasury.yields.ingested`, the query service consumes it and pushes SSE.
+    # 4222 = client port, 8222 = monitoring.
+    nats:
+        image: nats:2
+        command: ["-m", "8222"]
+        ports:
+            - "4222:4222"
+            - "8222:8222"
+
+    # --- Yields serving tier (one shared image, three processes) -------------
+
+    # Temporal worker for the on-demand Treasury backfill; also publishes
+    # `treasury.yields.ingested` to NATS as loads advance the warehouse.
+    yields-ingestion-service:
+        build:
+          context: .
+          dockerfile: images/services/Dockerfile
+        environment:
+          DATALAKE_ROOT: /project/datalake
+          YIELD_WAREHOUSE_DB: /project/datalake/YIELD_DATA/yield_warehouse.duckdb
+          TEMPORAL_ADDRESS: temporal:7233
+          NATS_URL: nats://nats:4222
+          # Keyless public US Treasury daily par yield curve CSV (one file per year).
+          TREASURY_YIELDS_URI: "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/{year}/all?type=daily_treasury_yield_curve&field_tdr_date_value={year}&page&_format=csv"
+        volumes:
+            - ./src:/project/src
+            - ./datalake:/project/datalake
+        command: python -m yield_data.temporal_backfill
+        # Wait for the dev server to be SERVING — the SDK client does not retry
+        # the initial connect, so starting early would crash the worker.
+        depends_on:
+            temporal:
+                condition: service_healthy
+            nats:
+                condition: service_started
+        restart: on-failure
+
+    # FastAPI read API over the DuckDB dbt models; consumes NATS and pushes SSE.
+    yields-query-service:
+        build:
+          context: .
+          dockerfile: images/services/Dockerfile
+        environment:
+          YIELD_WAREHOUSE_DB: /project/datalake/YIELD_DATA/yield_warehouse.duckdb
+          NATS_URL: nats://nats:4222
+        volumes:
+            - ./src:/project/src
+            - ./services:/project/services
+            - ./datalake:/project/datalake
+        command: uvicorn services.yields_query_service.app:app --host 0.0.0.0 --port 8000
+        # Host port is for direct debugging only; the gateway reaches this
+        # service over the compose network. Overridable to dodge local clashes.
+        ports:
+            - "${YIELDS_QUERY_PORT:-8000}:8000"
+        depends_on:
+            - nats
+
+    # Edge gateway: routes /api/yields/* to the query service (SSE-passthrough)
+    # and applies CORS for the frontend origin.
+    api-gateway:
+        build:
+          context: .
+          dockerfile: images/services/Dockerfile
+        environment:
+          QUERY_SERVICE_URL: http://yields-query-service:8000
+          FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:5173}
+        volumes:
+            - ./services:/project/services
+        command: uvicorn services.api_gateway.app:app --host 0.0.0.0 --port 8080
+        ports:
+            - "8090:8080"
+        depends_on:
+            - yields-query-service
+
+    # React + TS + Vite dashboard (dev server, hot reload). The browser talks to
+    # the api-gateway directly at VITE_API_BASE; served on 5173 = the CORS origin
+    # the gateway allows. node_modules stays in the image (anonymous volume).
+    frontend:
+        build:
+          context: ./frontend
+          dockerfile: Dockerfile
+        environment:
+          VITE_API_BASE: ${VITE_API_BASE:-http://localhost:8090/api/yields}
+        volumes:
+            - ./frontend:/app
+            - /app/node_modules
+        ports:
+            - "${FRONTEND_PORT:-5173}:5173"
+        depends_on:
+            - api-gateway
+
+volumes:
+    temporal-data:

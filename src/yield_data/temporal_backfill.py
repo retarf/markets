@@ -16,6 +16,7 @@ Start a backfill (from a client):
 """
 
 import asyncio
+import os
 from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
 
@@ -63,8 +64,17 @@ class TreasuryBackfillWorkflow:
         return total
 
 
-async def run_worker(address: str = "localhost:7233") -> None:
-    client = await Client.connect(address)
+def temporal_address(address: str | None = None) -> str:
+    """Temporal gRPC endpoint: explicit arg > ``TEMPORAL_ADDRESS`` > localhost.
+
+    In Docker Compose the worker reaches the dev server at ``temporal:7233``;
+    on a host it defaults to ``localhost:7233``.
+    """
+    return address or os.environ.get("TEMPORAL_ADDRESS") or "localhost:7233"
+
+
+async def run_worker(address: str | None = None) -> None:
+    client = await Client.connect(temporal_address(address))
     with ThreadPoolExecutor(max_workers=4) as executor:
         worker = Worker(
             client,
@@ -81,9 +91,9 @@ async def start_backfill(
     end_year: int,
     capture_date: str,
     db_path: str | None = None,
-    address: str = "localhost:7233",
+    address: str | None = None,
 ) -> int:
-    client = await Client.connect(address)
+    client = await Client.connect(temporal_address(address))
     return await client.execute_workflow(
         TreasuryBackfillWorkflow.run,
         args=[start_year, end_year, capture_date, db_path],
